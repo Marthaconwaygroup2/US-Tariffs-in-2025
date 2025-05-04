@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>U.S. Tariffs in 2025: Methodology</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            margin: 0 auto;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .header-bar {
+            height: 8px;
+            background: linear-gradient(90deg, #0046ad 0%, #0076ce 100%);
+        }
+        .mckinsey-blue {
+            color: #0046ad;
+        }
+        .mckinsey-light-blue {
+            color: #0076ce;
+        }
+        .data-source {
+            border-left: 3px solid #0076ce;
+            transition: all 0.3s ease;
+        }
+        .data-source:hover {
+            transform: translateX(5px);
+            background-color: rgba(0, 118, 206, 0.05);
+        }
+        .methodology-box {
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        .methodology-box:hover {
+            border-color: #0046ad;
+            box-shadow: 0 4px 12px rgba(0, 70, 173, 0.1);
+        }
+        .footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 40px;
+            background-color: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container flex flex-col">
+        <div class="header-bar"></div>
+        
+        <!-- Logo and Slide Title -->
+        <div class="flex justify-between items-center px-16 pt-10 pb-4">
+            <h1 class="text-3xl font-bold mckinsey-blue">Methodology</h1>
+            <div class="text-gray-500 text-sm">McKinsey & Company | May 2025</div>
+        </div>
+        <h2 class="px-16 text-xl font-semibold mckinsey-light-blue mb-6">Research Design & Analytical Framework</h2>
+        
+        <!-- Methodology Content -->
+        <div class="flex flex-col px-16 py-4 flex-grow">
+            <div class="grid grid-cols-2 gap-8">
+                <!-- Left Column - Data Sources -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 mckinsey-blue">Data Sources</h3>
+                    <div class="space-y-4">
+                        <div class="data-source pl-4 py-2">
+                            <p class="font-semibold">U.S. Census Bureau</p>
+                            <p class="text-sm text-gray-600">Trade flows, import-export volumes, tariff revenue</p>
+                        </div>
+                        
+                        <div class="data-source pl-4 py-2">
+                            <p class="font-semibold">OECD</p>
+                            <p class="text-sm text-gray-600">GDP forecasts, economic impact projections</p>
+                        </div>
+                        
+                        <div class="data-source pl-4 py-2">
+                            <p class="font-semibold">Bloomberg ESG</p>
+                            <p class="text-sm text-gray-600">Supply chain risks, manufacturing impact analysis</p>
+                        </div>
+                        
+                        <div class="data-source pl-4 py-2">
+                            <p class="font-semibold">Country-Specific Datasets</p>
+                            <p class="text-sm text-gray-600">China's Ministry of Commerce retaliation analysis</p>
+                            <p class="text-sm text-gray-600">EU Trade Dashboard for German exports</p>
+                            <p class="text-sm text-gray-600">Bank of Japan economic impact assessment</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Column - Analytical Framework -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 mckinsey-blue">Analytical Framework</h3>
+                    
+                    <div class="methodology-box p-4 mb-4">
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center mr-3">
+                                <i class="fas fa-chart-line text-blue-600"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">Econometric Modeling</p>
+                                <p class="text-sm text-gray-600">Regression analysis of tariff impacts across time series</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="methodology-box p-4 mb-4">
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center mr-3">
+                                <i class="fas fa-project-diagram text-blue-600"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">Supply Chain Network Analysis</p>
+                                <p class="text-sm text-gray-600">Disruption modeling and flow pattern shifts</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="methodology-box p-4">
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center mr-3">
+                                <i class="fas fa-code text-blue-600"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">Technical Tools</p>
+                                <p class="text-sm text-gray-600">Python (Pandas/Matplotlib), Tableau, R</p>
+                                <p class="text-sm text-gray-600">No synthetic data—only peer-reviewed datasets</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Research Quality Assurance -->
+            <div class="mt-10 pt-6">
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="font-semibold mckinsey-blue mb-2">Research Quality Assurance</h4>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center mr-2">
+                                <i class="fas fa-check text-green-600 text-sm"></i>
+                            </div>
+                            <span class="text-sm">Peer-reviewed sources</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center mr-2">
+                                <i class="fas fa-check text-green-600 text-sm"></i>
+                            </div>
+                            <span class="text-sm">Cross-validation of models</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center mr-2">
+                                <i class="fas fa-check text-green-600 text-sm"></i>
+                            </div>
+                            <span class="text-sm">Expert panel review</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer flex justify-between items-center px-16">
+            <div class="text-sm text-gray-500">Methodology</div>
+            <div class="text-sm text-gray-500">2 / 7</div>
+        </div>
+    </div>
+</body>
+</html>

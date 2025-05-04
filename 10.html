@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>US Tariffs in 2025: Sectoral Shocks and Global Ripples</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        .gradient-line {
+            height: 4px;
+            background: linear-gradient(90deg, #2563eb, #4f46e5, #7c3aed);
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .chart-container {
+            height: 280px;
+            width: 100%;
+            position: relative;
+        }
+        .sankey-chart {
+            height: 300px;
+            width: 100%;
+        }
+        .stat-card {
+            transition: all 0.3s ease;
+            border-radius: 8px;
+        }
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .page-indicator {
+            position: absolute;
+            bottom: 16px;
+            right: 24px;
+            font-size: 14px;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container flex flex-col">
+        <div class="gradient-line"></div>
+        
+        <!-- Header -->
+        <div class="px-20 pt-16">
+            <h2 class="text-3xl font-bold text-gray-800">Supply Chain Restructuring</h2>
+            <p class="text-lg text-gray-600 mt-1">The tariff-driven reconfiguration of global production networks</p>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="px-20 py-6">
+            <div class="flex space-x-8">
+                <!-- Left Section: Sankey Diagram -->
+                <div class="w-1/2">
+                    <div id="sankeyChart" class="sankey-chart"></div>
+                </div>
+                
+                <!-- Right Section: Reshoring vs Friend-shoring -->
+                <div class="w-1/2">
+                    <div class="chart-container">
+                        <canvas id="reshoringChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bottom Section: Stats and Insights -->
+            <div class="grid grid-cols-3 gap-6 mt-6">
+                <div class="stat-card bg-gradient-to-br from-blue-50 to-blue-100 p-5 border-l-4 border-blue-500">
+                    <h3 class="text-blue-800 text-lg font-bold mb-2">Implementation Timeline</h3>
+                    <div class="flex items-center justify-between">
+                        <div class="space-y-1">
+                            <div class="flex items-center">
+                                <div class="w-3 h-3 bg-blue-700 rounded-full mr-2"></div>
+                                <span class="text-gray-700 text-sm">3-5 years</span>
+                                <span class="ml-2 text-blue-600 font-semibold text-sm">41%</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-3 h-3 bg-blue-500 rounded-full mr-2"></div>
+                                <span class="text-gray-700 text-sm">1-2 years</span>
+                                <span class="ml-2 text-blue-600 font-semibold text-sm">26%</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-3 h-3 bg-blue-300 rounded-full mr-2"></div>
+                                <span class="text-gray-700 text-sm">>5 years</span>
+                                <span class="ml-2 text-blue-600 font-semibold text-sm">33%</span>
+                            </div>
+                        </div>
+                        <div class="w-20 h-20">
+                            <canvas id="timelineChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-card bg-gradient-to-br from-amber-50 to-amber-100 p-5 border-l-4 border-amber-500">
+                    <h3 class="text-amber-800 text-lg font-bold mb-2">Cost Implications</h3>
+                    <div class="flex items-center">
+                        <div class="w-1/2 pr-2">
+                            <div class="text-sm text-gray-600 mb-1">Reshoring Cost Increase</div>
+                            <div class="flex items-baseline">
+                                <span class="text-3xl font-bold text-amber-600">2x</span>
+                                <span class="text-xl font-bold text-amber-600">+</span>
+                            </div>
+                            <div class="text-xs text-gray-500 mt-1">47% of companies report</div>
+                        </div>
+                        <div class="w-1/2 pl-2 border-l border-amber-200">
+                            <div class="text-sm text-gray-600 mb-1">Automation Focus</div>
+                            <div class="flex items-baseline">
+                                <span class="text-3xl font-bold text-amber-600">81%</span>
+                            </div>
+                            <div class="text-xs text-gray-500 mt-1">vs human workers</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-card bg-gradient-to-br from-green-50 to-green-100 p-5 border-l-4 border-green-500">
+                    <h3 class="text-green-800 text-lg font-bold mb-2">Risk Management Shifts</h3>
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-700 text-sm">Geographic Concentration</span>
+                            <div class="flex items-center">
+                                <span class="text-xs font-medium text-gray-500 mr-1">China-dominant →</span>
+                                <span class="text-xs font-semibold text-green-600">Diversifying</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-700 text-sm">Inventory Management</span>
+                            <div class="flex items-center">
+                                <span class="text-xs font-medium text-gray-500 mr-1">Just-in-time →</span>
+                                <span class="text-xs font-semibold text-green-600">Buffer Stock</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-700 text-sm">Supplier Relationships</span>
+                            <div class="flex items-center">
+                                <span class="text-xs font-medium text-gray-500 mr-1">Price-driven →</span>
+                                <span class="text-xs font-semibold text-green-600">Resilience</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quote -->
+            <div class="mt-6 bg-gray-50 p-4 rounded-lg">
+                <p class="text-gray-600 text-sm italic">
+                    "Instead of moving supply chains back to the United States, it would be more cost-effective to relocate them to 
+                    lower-tariffed countries, according to 61% of respondents."
+                </p>
+                <p class="text-gray-500 text-xs mt-1">— CNBC Supply Chain Survey, April 2025</p>
+            </div>
+        </div>
+        
+        <div class="page-indicator">6 / 10</div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Reshoring vs Friend-shoring Chart
+            const reshoringCtx = document.getElementById('reshoringChart').getContext('2d');
+            new Chart(reshoringCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Friend-Shoring', 'Low-Tariff Country\nRelocation', 'Reshoring', 'No Change'],
+                    datasets: [{
+                        label: 'Corporate Strategy Response (%)',
+                        data: [48, 40, 12, 0],
+                        backgroundColor: [
+                            'rgba(79, 70, 229, 0.8)',
+                            'rgba(249, 115, 22, 0.8)',
+                            'rgba(220, 38, 38, 0.8)',
+                            'rgba(107, 114, 128, 0.8)'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Supply Chain Restructuring Strategies',
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
+                        },
+                        subtitle: {
+                            display: true,
+                            text: 'Friend-shoring outpaces reshoring by 4:1 ratio',
+                            font: {
+                                size: 12,
+                                style: 'italic'
+                            },
+                            padding: {
+                                bottom: 10
+                            }
+                        },
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.raw + '%';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 60,
+                            title: {
+                                display: true,
+                                text: 'Companies Adopting (%)',
+                                font: {
+                                    weight: 'bold',
+                                    size: 12
+                                }
+                            }
+                        },
+                        y: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Timeline Doughnut Chart
+            const timelineCtx = document.getElementById('timelineChart').getContext('2d');
+            new Chart(timelineCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['3-5 years', '1-2 years', '>5 years'],
+                    datasets: [{
+                        data: [41, 26, 33],
+                        backgroundColor: [
+                            'rgba(59, 130, 246, 0.8)',
+                            'rgba(59, 130, 246, 0.5)',
+                            'rgba(59, 130, 246, 0.3)'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            enabled: false
+                        }
+                    },
+                    cutout: '60%'
+                }
+            });
+            
+            // D3.js Sankey Diagram
+            createSankeyDiagram();
+            
+            function createSankeyDiagram() {
+                const sankeyDiv = document.getElementById('sankeyChart');
+                
+                // Create an SVG element
+                const svg = d3.select(sankeyDiv).append("svg")
+                    .attr("width", "100%")
+                    .attr("height", "100%")
+                    .attr("viewBox", "0 0 600 300");
+                
+                // Create a simplified supply chain flow diagram
+                // Node positions
+                const nodes = [
+                    {id: "pre-tariff", name: "Pre-Tariff\nSupply Chain", x: 50, y: 150, color: "#94a3b8"},
+                    {id: "china", name: "China", x: 200, y: 80, color: "#ef4444"},
+                    {id: "mexico", name: "Mexico", x: 200, y: 150, color: "#22c55e"},
+                    {id: "vietnam", name: "Vietnam/ASEAN", x: 200, y: 220, color: "#f59e0b"},
+                    {id: "us", name: "United States", x: 350, y: 80, color: "#3b82f6"},
+                    {id: "post-tariff", name: "Post-Tariff\nSupply Chain", x: 500, y: 150, color: "#6366f1"}
+                ];
+                
+                // Edge definitions with flow volumes
+                const links = [
+                    {source: "pre-tariff", target: "china", value: 70, color: "#ef4444"},
+                    {source: "pre-tariff", target: "mexico", value: 20, color: "#22c55e"},
+                    {source: "pre-tariff", target: "vietnam", value: 10, color: "#f59e0b"},
+                    {source: "china", target: "us", value: 30, color: "#ef4444"},
+                    {source: "china", target: "post-tariff", value: 20, color: "#ef4444"},
+                    {source: "mexico", target: "post-tariff", value: 40, color: "#22c55e"},
+                    {source: "vietnam", target: "post-tariff", value: 30, color: "#f59e0b"},
+                    {source: "us", target: "post-tariff", value: 10, color: "#3b82f6"}
+                ];
+                
+                // Draw nodes
+                svg.selectAll(".node")
+                    .data(nodes)
+                    .enter()
+                    .append("circle")
+                    .attr("cx", d => d.x)
+                    .attr("cy", d => d.y)
+                    .attr("r", d => {
+                        // Determine the size based on the sum of incoming and outgoing values
+                        const values = links.filter(link => link.source === d.id || link.target === d.id)
+                                           .map(link => link.value);
+                        return Math.sqrt(d3.sum(values)) * 1.5;
+                    })
+                    .attr("fill", d => d.color)
+                    .attr("stroke", "#fff")
+                    .attr("stroke-width", 2);
+                
+                // Draw labels
+                svg.selectAll(".label")
+                    .data(nodes)
+                    .enter()
+                    .append("text")
+                    .attr("x", d => d.x)
+                    .attr("y", d => {
+                        // Check if it's a multi-line label
+                        return d.name.includes('\n') ? d.y - 25 : d.y - 20;
+                    })
+                    .attr("text-anchor", "middle")
+                    .attr("font-size", "12px")
+                    .attr("font-weight", "600")
+                    .attr("fill", "#1e293b")
+                    .text(d => {
+                        // Handle multi-line labels
+                        return d.name.includes('\n') ? d.name.split('\n')[0] : d.name;
+                    });
+                
+                // Add second line for multi-line labels
+                svg.selectAll(".nodes")
+                    .data(nodes.filter(d => d.name.includes('\n')))
+                    .enter()
+                    .append("text")
+                    .attr("x", d => d.x)
+                    .attr("y", d => d.y - 10)
+                    .attr("text-anchor", "middle")
+                    .attr("font-size", "12px")
+                    .attr("font-weight", "600")
+                    .attr("fill", "#1e293b")
+                    .text(d => d.name.split('\n')[1]);
+                
+                // Draw links (curves between nodes)
+                svg.selectAll(".link")
+                    .data(links)
+                    .enter()
+                    .append("path")
+                    .attr("d", d => {
+                        const sourceNode = nodes.find(node => node.id === d.source);
+                        const targetNode = nodes.find(node => node.id === d.target);
+                        
+                        if (!sourceNode || !targetNode) return "";
+                        
+                        // Create a curved path
+                        return `M ${sourceNode.x} ${sourceNode.y} 
+                                C ${(sourceNode.x + targetNode.x) / 2} ${sourceNode.y},
+                                  ${(sourceNode.x + targetNode.x) / 2} ${targetNode.y}, 
+                                  ${targetNode.x} ${targetNode.y}`;
+                    })
+                    .attr("fill", "none")
+                    .attr("stroke", d => d.color)
+                    .attr("stroke-width", d => Math.sqrt(d.value) * 1.5)
+                    .attr("opacity", 0.7);
+                
+                // Add title
+                svg.append("text")
+                    .attr("x", 300)
+                    .attr("y", 30)
+                    .attr("text-anchor", "middle")
+                    .attr("font-size", "14px")
+                    .attr("font-weight", "bold")
+                    .attr("fill", "#1e293b")
+                    .text("Supply Chain Flow Redistribution");
+            }
+        });
+    </script>
+</body>
+</html>

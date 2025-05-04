@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>US Tariffs in 2025: Sectoral Shocks and Global Ripples</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .gradient-line {
+            height: 4px;
+            background: linear-gradient(90deg, #2563eb, #4f46e5, #7c3aed);
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .chart-label {
+            font-size: 12px;
+            fill: #64748b;
+        }
+        .data-point {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            border-radius: 8px;
+            background-color: #f8fafc;
+            border-left: 4px solid;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container flex flex-col">
+        <div class="gradient-line"></div>
+        
+        <!-- Main Content -->
+        <div class="flex flex-col justify-center items-center h-full px-24 py-16">
+            <div class="text-center mb-16">
+                <h1 class="text-5xl font-bold text-gray-800 mb-4">US Tariffs in 2025</h1>
+                <h2 class="text-3xl font-light text-gray-600">Sectoral Shocks and Global Ripples</h2>
+            </div>
+            
+            <div class="w-full flex justify-center items-center mb-12">
+                <svg width="500" height="180" viewBox="0 0 500 180">
+                    <!-- World Map Silhouette -->
+                    <path d="M90,80 Q120,50 150,70 T210,80 T270,70 T330,85 T390,75" stroke="#3b82f6" stroke-width="2" fill="none"/>
+                    <path d="M110,100 Q140,120 180,110 T240,115 T300,100 T360,120" stroke="#3b82f6" stroke-width="2" fill="none"/>
+
+                    <!-- Tariff arrows -->
+                    <path d="M140,85 L140,65 L130,75 M140,65 L150,75" stroke="#ef4444" stroke-width="2" fill="none"/>
+                    <path d="M220,85 L220,65 L210,75 M220,65 L230,75" stroke="#ef4444" stroke-width="2" fill="none"/>
+                    <path d="M310,85 L310,65 L300,75 M310,65 L320,75" stroke="#ef4444" stroke-width="2" fill="none"/>
+                    <path d="M380,85 L380,65 L370,75 M380,65 L390,75" stroke="#ef4444" stroke-width="2" fill="none"/>
+                </svg>
+            </div>
+            
+            <div class="grid grid-cols-3 gap-8 w-full">
+                <div class="data-point border-blue-500">
+                    <span class="text-sm text-gray-500 mb-1">Baseline Tariff</span>
+                    <span class="text-4xl font-bold text-blue-600">10%</span>
+                    <span class="text-sm text-gray-500 mt-2">on all US imports</span>
+                </div>
+                <div class="data-point border-red-500">
+                    <span class="text-sm text-gray-500 mb-1">GDP Impact</span>
+                    <span class="text-4xl font-bold text-red-600">-0.3%</span>
+                    <span class="text-sm text-gray-500 mt-2">Q1 2025 contraction</span>
+                </div>
+                <div class="data-point border-purple-500">
+                    <span class="text-sm text-gray-500 mb-1">Household Cost</span>
+                    <span class="text-4xl font-bold text-purple-600">$3,800</span>
+                    <span class="text-sm text-gray-500 mt-2">per year (2024 dollars)</span>
+                </div>
+            </div>
+            
+            <div class="mt-16 text-sm text-gray-500">
+                May 2025 | Data-driven analysis of economic, geopolitical, and industrial impacts
+            </div>
+        </div>
+    </div>
+</body>
+</html>

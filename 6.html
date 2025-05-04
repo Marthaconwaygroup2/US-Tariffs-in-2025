@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>US Tariffs in 2025: Sectoral Shocks and Global Ripples</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        .gradient-line {
+            height: 4px;
+            background: linear-gradient(90deg, #2563eb, #4f46e5, #7c3aed);
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .chart-container {
+            height: 340px;
+            position: relative;
+        }
+        .page-indicator {
+            position: absolute;
+            bottom: 16px;
+            right: 24px;
+            font-size: 14px;
+            color: #94a3b8;
+        }
+        .kpi-card {
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container flex flex-col">
+        <div class="gradient-line"></div>
+        
+        <!-- Header -->
+        <div class="px-20 pt-16">
+            <h2 class="text-3xl font-bold text-gray-800">Macroeconomic Effects</h2>
+            <p class="text-lg text-gray-600 mt-1">Immediate economic impact of the 2025 tariffs</p>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="flex flex-col px-20 py-6">
+            <div class="flex space-x-12">
+                <!-- Left Section - Line Chart -->
+                <div class="w-3/5">
+                    <div class="chart-container">
+                        <canvas id="gdpChart"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Right Section - CPI Breakdown -->
+                <div class="w-2/5">
+                    <div class="chart-container">
+                        <canvas id="cpiChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bottom Section - Key Indicators -->
+            <div class="grid grid-cols-3 gap-6 mt-8">
+                <div class="kpi-card bg-red-50 border-l-4 border-red-500">
+                    <p class="text-sm font-medium text-gray-500">Long-run GDP Impact</p>
+                    <p class="text-3xl font-bold text-red-600 my-1">-6.0%</p>
+                    <p class="text-xs text-gray-500">Penn Wharton Budget Model</p>
+                </div>
+                
+                <div class="kpi-card bg-orange-50 border-l-4 border-orange-500">
+                    <p class="text-sm font-medium text-gray-500">Annual Household Cost</p>
+                    <p class="text-3xl font-bold text-orange-600 my-1">$3,800</p>
+                    <p class="text-xs text-gray-500">2024 dollars</p>
+                </div>
+                
+                <div class="kpi-card bg-blue-50 border-l-4 border-blue-500">
+                    <p class="text-sm font-medium text-gray-500">Recession Probability</p>
+                    <p class="text-3xl font-bold text-blue-600 my-1">63%</p>
+                    <p class="text-xs text-gray-500">According to supply chain survey</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="page-indicator">3 / 10</div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // GDP Chart
+            const gdpCtx = document.getElementById('gdpChart').getContext('2d');
+            new Chart(gdpCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Q1 2024', 'Q2 2024', 'Q3 2024', 'Q4 2024', 'Q1 2025', 'Q2 2025 (Proj)', 'Q3 2025 (Proj)', 'Q4 2025 (Proj)'],
+                    datasets: [
+                        {
+                            label: 'Actual GDP Growth (%)',
+                            data: [2.1, 1.9, 2.2, 2.0, -0.3, null, null, null],
+                            borderColor: '#ef4444',
+                            backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                            borderWidth: 3,
+                            pointRadius: 4,
+                            tension: 0.2,
+                            fill: false
+                        },
+                        {
+                            label: 'Counterfactual (No Tariffs)',
+                            data: [2.1, 1.9, 2.2, 2.0, 2.3, 2.4, 2.5, 2.6],
+                            borderColor: '#3b82f6',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            pointRadius: 3,
+                            tension: 0.2,
+                            fill: false
+                        },
+                        {
+                            label: 'Projection with Tariffs',
+                            data: [null, null, null, null, -0.3, -0.5, -0.2, 0.1],
+                            borderColor: '#f97316',
+                            borderWidth: 2,
+                            pointRadius: 3,
+                            tension: 0.2,
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'U.S. GDP Growth: Pre/Post-Tariffs vs. Counterfactual',
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false
+                        },
+                        legend: {
+                            position: 'top',
+                            align: 'end',
+                            labels: {
+                                boxWidth: 12,
+                                usePointStyle: true
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Growth Rate (%)'
+                            },
+                            suggestedMin: -1,
+                            suggestedMax: 3
+                        }
+                    }
+                }
+            });
+            
+            // CPI Chart
+            const cpiCtx = document.getElementById('cpiChart').getContext('2d');
+            new Chart(cpiCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Overall CPI', 'Goods (Non-Food)', 'Food & Beverages', 'Apparel', 'Automobiles'],
+                    datasets: [
+                        {
+                            label: 'Pre-Tariff (Dec 2024)',
+                            data: [2.4, -0.2, 2.7, 1.1, 0.8],
+                            backgroundColor: '#3b82f6',
+                            borderWidth: 0
+                        },
+                        {
+                            label: 'Post-Tariff (Apr 2025)',
+                            data: [3.1, 2.3, 3.8, 4.9, 5.7],
+                            backgroundColor: '#ef4444',
+                            borderWidth: 0
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Inflation Components (% Change)',
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
+                        },
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                boxWidth: 12,
+                                usePointStyle: true
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.parsed.y + '%';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Inflation Rate (%)'
+                            },
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

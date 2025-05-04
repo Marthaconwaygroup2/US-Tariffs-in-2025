@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>US Tariffs in 2025: Sectoral Shocks and Global Ripples</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        .gradient-line {
+            height: 4px;
+            background: linear-gradient(90deg, #2563eb, #4f46e5, #7c3aed);
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .chart-container {
+            height: 320px;
+            width: 100%;
+            position: relative;
+        }
+        .conclusion-card {
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        .conclusion-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+        }
+        .page-indicator {
+            position: absolute;
+            bottom: 16px;
+            right: 24px;
+            font-size: 14px;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container flex flex-col">
+        <div class="gradient-line"></div>
+        
+        <!-- Header -->
+        <div class="px-20 pt-16">
+            <h2 class="text-3xl font-bold text-gray-800">Conclusion</h2>
+            <p class="text-lg text-gray-600 mt-1">Long-term outlook and system-level implications</p>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="px-20 py-6">
+            <!-- GDP Projections Chart -->
+            <div class="chart-container mb-8">
+                <canvas id="gdpProjectionChart"></canvas>
+            </div>
+            
+            <!-- Key Conclusions -->
+            <div class="grid grid-cols-3 gap-6">
+                <!-- Economic Conclusion -->
+                <div class="conclusion-card bg-gradient-to-br from-blue-50 to-blue-100 p-5 border-l-4 border-blue-500">
+                    <h3 class="text-lg font-bold text-blue-800 mb-3">Economic Outlook</h3>
+                    <p class="text-sm text-gray-700">
+                        Tariffs represent a significant economic shock with 0.6% persistent GDP reduction in the US, and 0.3-1.5% reductions for major trading partners, potentially triggering recession in 63% of surveyed scenarios.
+                    </p>
+                    <div class="mt-3 flex items-baseline">
+                        <span class="text-2xl font-bold text-blue-700">-1.1pp</span>
+                        <span class="ml-2 text-xs text-gray-600">US GDP growth impact 2025</span>
+                    </div>
+                </div>
+                
+                <!-- Supply Chain Conclusion -->
+                <div class="conclusion-card bg-gradient-to-br from-purple-50 to-purple-100 p-5 border-l-4 border-purple-500">
+                    <h3 class="text-lg font-bold text-purple-800 mb-3">Supply Chain Reconfiguration</h3>
+                    <p class="text-sm text-gray-700">
+                        The tariff regime is accelerating a bifurcated global trading system with parallel US-centric and China-centric supply chains. Friend-shoring outpacing reshoring 4:1 with Mexico, Vietnam, Thailand as key beneficiaries.
+                    </p>
+                    <div class="mt-3 flex items-baseline">
+                        <span class="text-2xl font-bold text-purple-700">3-5yrs</span>
+                        <span class="ml-2 text-xs text-gray-600">Timeline for supply chain shifts</span>
+                    </div>
+                </div>
+                
+                <!-- Geopolitical Conclusion -->
+                <div class="conclusion-card bg-gradient-to-br from-amber-50 to-amber-100 p-5 border-l-4 border-amber-500">
+                    <h3 class="text-lg font-bold text-amber-800 mb-3">Geopolitical Shifts</h3>
+                    <p class="text-sm text-gray-700">
+                        Accelerated formation of regional trading blocs and deepening China-EU economic ties represent long-term structural shifts. 2025 tariffs appear to be catalyzing rather than initiating trade realignments already underway.
+                    </p>
+                    <div class="mt-3 flex items-baseline">
+                        <span class="text-2xl font-bold text-amber-700">+27%</span>
+                        <span class="ml-2 text-xs text-gray-600">YoY increase in non-US trade agreements</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Final Quote -->
+            <div class="mt-8 bg-gray-50 p-6 rounded-lg text-center">
+                <p class="text-gray-700 text-lg italic font-light">
+                    "Tariffs are a double-edged sword—protectionism today may breed fragmentation tomorrow."
+                </p>
+                <div class="flex items-center justify-center mt-4 space-x-4">
+                    <div class="w-3 h-3 rounded-full bg-blue-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-purple-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-amber-500"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="page-indicator">10 / 10</div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('gdpProjectionChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['2024', '2025', '2026', '2027', '2028', '2029', '2030'],
+                    datasets: [
+                        {
+                            label: 'United States',
+                            data: [100, 99.7, 99.4, 99.2, 99.0, 98.7, 98.4],
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.3,
+                            fill: true
+                        },
+                        {
+                            label: 'China',
+                            data: [100, 96.6, 95.8, 95.5, 96.2, 97.0, 98.0],
+                            borderColor: '#ef4444',
+                            backgroundColor: 'rgba(239, 68, 68, 0.05)',
+                            borderWidth: 2,
+                            tension: 0.3,
+                            fill: true
+                        },
+                        {
+                            label: 'EU',
+                            data: [100, 98.5, 98.0, 98.2, 98.7, 99.2, 99.8],
+                            borderColor: '#f59e0b',
+                            backgroundColor: 'rgba(245, 158, 11, 0.05)',
+                            borderWidth: 2,
+                            tension: 0.3,
+                            fill: true
+                        },
+                        {
+                            label: 'Mexico',
+                            data: [100, 98.3, 99.0, 101.5, 103.0, 103.8, 104.5],
+                            borderColor: '#22c55e',
+                            backgroundColor: 'rgba(34, 197, 94, 0.05)',
+                            borderWidth: 2,
+                            tension: 0.3,
+                            fill: true
+                        },
+                        {
+                            label: 'Global No-Tariff Scenario',
+                            data: [100, 102.2, 104.5, 106.8, 109.1, 111.5, 114.0],
+                            borderColor: '#6b7280',
+                            borderWidth: 1.5,
+                            borderDash: [5, 5],
+                            pointStyle: 'dash',
+                            tension: 0.3,
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Long-Term GDP Projections (2024 = Base 100)',
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false
+                        },
+                        legend: {
+                            position: 'top',
+                            align: 'end',
+                            labels: {
+                                boxWidth: 12,
+                                usePointStyle: true
+                            }
+                        },
+                        annotation: {
+                            annotations: {
+                                line1: {
+                                    type: 'line',
+                                    yMin: 100,
+                                    yMax: 100,
+                                    borderColor: 'gray',
+                                    borderWidth: 1,
+                                    borderDash: [3, 3],
+                                    label: {
+                                        content: 'Base Year',
+                                        enabled: true
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'GDP Index (2024 = 100)'
+                            },
+                            suggestedMin: 94,
+                            suggestedMax: 115
+                        }
+                    },
+                    elements: {
+                        point: {
+                            radius: 3
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

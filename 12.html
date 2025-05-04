@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>U.S. Tariffs in 2025: Strategic Implications</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            margin: 0 auto;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .header-bar {
+            height: 8px;
+            background: linear-gradient(90deg, #0046ad 0%, #0076ce 100%);
+        }
+        .mckinsey-blue {
+            color: #0046ad;
+        }
+        .mckinsey-light-blue {
+            color: #0076ce;
+        }
+        .strategy-card {
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .strategy-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 70, 173, 0.1);
+            border-color: #0076ce;
+        }
+        .chart-container {
+            height: 280px;
+            position: relative;
+        }
+        .footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 40px;
+            background-color: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container flex flex-col">
+        <div class="header-bar"></div>
+        
+        <!-- Logo and Slide Title -->
+        <div class="flex justify-between items-center px-16 pt-10 pb-4">
+            <h1 class="text-3xl font-bold mckinsey-blue">Strategic Implications</h1>
+            <div class="text-gray-500 text-sm">McKinsey & Company | May 2025</div>
+        </div>
+        
+        <!-- Content -->
+        <div class="flex flex-col px-16 py-4 flex-grow">
+            <!-- Supply Chain Risk Chart -->
+            <div class="mb-4">
+                <h3 class="text-lg font-semibold mb-3 mckinsey-light-blue">Global Supply Chain Risk Index</h3>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <div class="chart-container">
+                        <canvas id="riskIndexChart"></canvas>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2">Source: McKinsey Global Supply Chain Risk Index, April 2025</p>
+                </div>
+            </div>
+            
+            <!-- Reshoring vs Friendshoring -->
+            <div class="mb-4">
+                <h3 class="text-lg font-semibold mb-3 mckinsey-light-blue">Reshoring vs. Friendshoring Trends</h3>
+                <div class="grid grid-cols-2 gap-6">
+                    <!-- Reshoring -->
+                    <div class="strategy-card p-4">
+                        <div class="flex items-center mb-3">
+                            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-flag text-blue-600"></i>
+                            </div>
+                            <h4 class="font-semibold">Reshoring</h4>
+                        </div>
+                        <ul class="space-y-2 text-sm">
+                            <li class="flex items-start">
+                                <span class="text-blue-600 mr-2">▪</span>
+                                <span><strong>Advantages:</strong> Greater control, IP protection, shortened lead times</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-600 mr-2">▪</span>
+                                <span><strong>Challenges:</strong> 15-40% higher production costs, labor shortages</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-600 mr-2">▪</span>
+                                <span><strong>Adoption:</strong> 28% of surveyed companies with active plans (vs. 12% in 2023)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-600 mr-2">▪</span>
+                                <span><strong>Sectors:</strong> Semiconductors, pharmaceuticals, critical minerals</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Friendshoring -->
+                    <div class="strategy-card p-4">
+                        <div class="flex items-center mb-3">
+                            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-handshake text-green-600"></i>
+                            </div>
+                            <h4 class="font-semibold">Friendshoring</h4>
+                        </div>
+                        <ul class="space-y-2 text-sm">
+                            <li class="flex items-start">
+                                <span class="text-green-600 mr-2">▪</span>
+                                <span><strong>Advantages:</strong> Cost efficiency, diversification without drastic changes</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-600 mr-2">▪</span>
+                                <span><strong>Challenges:</strong> Infrastructure gaps, skill shortages in new locations</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-600 mr-2">▪</span>
+                                <span><strong>Adoption:</strong> 65% of companies moving production to allies (CNBC survey)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-600 mr-2">▪</span>
+                                <span><strong>Key destinations:</strong> Mexico, Vietnam, Malaysia, India, Poland</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Case Examples -->
+            <div>
+                <h3 class="text-lg font-semibold mb-3 mckinsey-light-blue">Industry Case Examples</h3>
+                <div class="grid grid-cols-3 gap-4">
+                    <!-- Tesla Case -->
+                    <div class="strategy-card p-4">
+                        <div class="flex items-center mb-2">
+                            <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center mr-2">
+                                <i class="fas fa-car text-red-600"></i>
+                            </div>
+                            <h4 class="font-semibold text-sm">Tesla Mexico Gigafactory</h4>
+                        </div>
+                        <p class="text-xs mb-2">$5B investment in Monterrey, Mexico to build EVs</p>
+                        <div class="flex justify-between text-xs">
+                            <span>Strategy:</span>
+                            <span class="font-semibold">Nearshoring</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>Tariff Savings:</span>
+                            <span class="font-semibold text-green-600">$850M/year</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>Timeline:</span>
+                            <span class="font-semibold">Accelerated by 12 months</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Intel Case -->
+                    <div class="strategy-card p-4">
+                        <div class="flex items-center mb-2">
+                            <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-2">
+                                <i class="fas fa-microchip text-blue-600"></i>
+                            </div>
+                            <h4 class="font-semibold text-sm">Intel Arizona Fabs</h4>
+                        </div>
+                        <p class="text-xs mb-2">$30B investment in domestic chip manufacturing</p>
+                        <div class="flex justify-between text-xs">
+                            <span>Strategy:</span>
+                            <span class="font-semibold">Reshoring</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>CHIPS Act benefit:</span>
+                            <span class="font-semibold text-green-600">$8.5B</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>Jobs created:</span>
+                            <span class="font-semibold">3,000 direct</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Samsung Case -->
+                    <div class="strategy-card p-4">
+                        <div class="flex items-center mb-2">
+                            <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center mr-2">
+                                <i class="fas fa-mobile-alt text-purple-600"></i>
+                            </div>
+                            <h4 class="font-semibold text-sm">Samsung Vietnam Expansion</h4>
+                        </div>
+                        <p class="text-xs mb-2">$3B additional investment in existing facilities</p>
+                        <div class="flex justify-between text-xs">
+                            <span>Strategy:</span>
+                            <span class="font-semibold">Friendshoring</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>China capacity shift:</span>
+                            <span class="font-semibold">45% → 15%</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>Completion:</span>
+                            <span class="font-semibold">Q4 2025</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Key Insight -->
+            <div class="mt-4 bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+                <div class="flex">
+                    <i class="fas fa-lightbulb text-yellow-500 mr-3 mt-1"></i>
+                    <div>
+                        <p class="font-semibold">Key Strategic Insight</p>
+                        <p class="text-sm">Companies are pursuing dual strategies: targeted reshoring for critical components and friendshoring to allies for cost efficiency. These shifts will permanently alter global supply chain architectures, with an increasing emphasis on supply chain resilience over pure cost optimization.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer flex justify-between items-center px-16">
+            <div class="text-sm text-gray-500">Strategic Implications</div>
+            <div class="text-sm text-gray-500">5 / 7</div>
+        </div>
+    </div>
+    
+    <script>
+        // Risk Index Chart
+        const riskCtx = document.getElementById('riskIndexChart').getContext('2d');
+        const riskIndexChart = new Chart(riskCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan 23', 'Apr 23', 'Jul 23', 'Oct 23', 'Jan 24', 'Apr 24', 'Jul 24', 'Oct 24', 'Jan 25', 'Apr 25'],
+                datasets: [{
+                    label: 'Global Supply Chain Risk Index',
+                    data: [35, 32, 34, 36, 42, 45, 52, 58, 65, 78],
+                    borderColor: '#0046ad',
+                    backgroundColor: 'rgba(0, 70, 173, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }, {
+                    label: 'China Supply Chain Risk',
+                    data: [40, 42, 45, 48, 52, 57, 65, 72, 84, 95],
+                    borderColor: '#d9534f',
+                    backgroundColor: 'rgba(217, 83, 79, 0.05)',
+                    borderWidth: 3,
+                    fill: false,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    annotation: {
+                        annotations: {
+                            line1: {
+                                type: 'line',
+                                mode: 'vertical',
+                                scaleID: 'x',
+                                value: 8,
+                                borderColor: 'rgba(0, 0, 0, 0.2)',
+                                borderWidth: 2,
+                                label: {
+                                    content: 'Tariffs Begin',
+                                    enabled: true,
+                                    position: 'top'
+                                }
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Risk Index (0-100)'
+                        },
+                        min: 0,
+                        max: 100
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
