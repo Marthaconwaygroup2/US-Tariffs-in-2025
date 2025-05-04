@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Slideshow - Refined & Fixed</title> <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> {/* Crucial for responsiveness */}
+    <title>Modern Slideshow - Responsive</title> {/* Updated Title */}
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -34,8 +35,9 @@
                          radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.3) 0%, rgba(15, 23, 42, 0.5) 40%, rgba(15, 23, 42, 0.9) 80%),
                          #0f172a;
              background-attachment: fixed;
-             color: var(--lightText, #e5e7eb); display: flex; flex-direction: column; font-family: 'Inter', sans-serif; overflow: hidden;
+             color: var(--lightText, #e5e7eb); display: flex; flex-direction: column; font-family: 'Inter', sans-serif; overflow: hidden; /* Keep overflow hidden for body */
              opacity: 0; animation: fadeIn 0.5s 0.1s ease-out forwards;
+             -webkit-tap-highlight-color: transparent; /* Improve mobile tap feel */
         }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -44,17 +46,24 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             background: rgba(15, 23, 42, 0.3); backdrop-filter: blur(5px);
             height: 55px; display: flex; flex-direction: column; justify-content: center;
+            position: sticky; top: 0; z-index: 50; /* Make header sticky */
         }
         .page-header h1 { font-size: 1.3rem; font-weight: 600; letter-spacing: 0.03em; color: #e5e7eb; margin: 0; }
 
         .main-content {
              flex-grow: 1; display: flex; flex-direction: row;
              padding: 5px 5px 5px 2px;
-             gap: 5px; overflow: hidden; align-items: center;
-             height: calc(100vh - 55px - 20px);
+             gap: 5px; overflow: hidden; /* Hide overflow here on desktop */
+             align-items: center;
+             /* Desktop height calculation - might be overridden on mobile */
+             height: calc(100vh - 55px); /* Adjusted for sticky header */
         }
 
-        .slide-container { width: 78%; position: relative; display: flex; flex-direction: column; }
+        .slide-container {
+             width: 78%; position: relative; display: flex; flex-direction: column;
+             align-self: stretch; /* Make it stretch vertically in flex container */
+             justify-content: center; /* Center content vertically */
+        }
 
         .slide-frame {
              width: 100%; aspect-ratio: 16 / 8.8;
@@ -63,22 +72,32 @@
              border: 1px solid var(--panelBorder, rgba(255, 255, 255, 0.08));
              box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
              transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+             max-width: 100%; /* Ensure it doesn't overflow horizontally */
+             margin: auto 0; /* Center vertically within container */
         }
         .slide-container:hover .slide-frame { transform: translateY(-3px); box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.55); }
 
         .slide-iframe {
-            width: 100%; height: 100%;
+            width: 100%; height: 100%; display: block; /* Prevent extra space below iframe */
             background-color: var(--secondaryDark, #111827);
             overflow: hidden; border: none; border-radius: 0.5rem;
-             /* Added for fade transition */
-            opacity: 1;
-            transition: opacity 0.3s ease-in-out;
+            opacity: 1; transition: opacity 0.3s ease-in-out;
         }
 
         .explanation-container {
-            width: 22%; padding: 1rem 0.5rem 1rem 1rem; overflow-y: auto;
-            color: var(--lightText, #e5e7eb); align-self: center;
+            width: 22%; padding: 1rem 0.5rem 1rem 1rem;
+            color: var(--lightText, #e5e7eb);
+            align-self: stretch; /* Make it stretch vertically */
+            display: flex; flex-direction: column; /* Use flex for internal layout */
+            overflow: hidden; /* Hide overflow here */
         }
+        .explanation-content-wrapper { /* Added wrapper for scrolling */
+            overflow-y: auto;
+            flex-grow: 1; /* Allow wrapper to take available space */
+            overscroll-behavior: contain; /* Prevent scroll chaining */
+            padding-right: 5px; /* Space for scrollbar */
+        }
+
         #slideExplanation {
              font-size: 1rem; line-height: 1.65; padding-top: 0.5rem;
              opacity: 1; transition: opacity 0.3s ease-in-out;
@@ -89,6 +108,7 @@
              font-size: 1rem; font-weight: 600; color: var(--lightText, #e5e7eb);
              margin-bottom: 0.5rem; padding-bottom: 0.5rem;
              border-bottom: 1px solid var(--panelBorder, rgba(255, 255, 255, 0.08));
+             flex-shrink: 0; /* Prevent title from shrinking */
         }
 
         .controls-area {
@@ -108,7 +128,12 @@
              position: absolute; top: 0; left: 0; right: 0; bottom: 0;
              display: flex; justify-content: space-between; align-items: center; padding: 0 1rem; opacity: 0; transition: opacity 0.3s ease-in-out; z-index: 20; pointer-events: none;
         }
-        .slide-frame:hover .nav-controls { opacity: 1; }
+        /* Make nav arrows visible on touch devices without hover */
+        @media (hover: none) {
+            .nav-controls { opacity: 0.6; } /* Show slightly dimmed arrows */
+        }
+        .slide-frame:hover .nav-controls { opacity: 1; } /* Full opacity on hover still */
+
         .nav-button { background: rgba(17, 24, 39, 0.5); backdrop-filter: blur(5px); border: 1px solid var(--panelBorder, rgba(255, 255, 255, 0.08)); color: var(--mutedText, #cbd5e1); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; pointer-events: auto; }
         .nav-button:hover { background: rgba(30, 41, 59, 0.7); color: var(--lightText, #e5e7eb); transform: scale(1.05); }
         .nav-button:disabled { opacity: 0.4; cursor: not-allowed; transform: scale(1); pointer-events: none; }
@@ -116,6 +141,93 @@
         /* Removed Modal Styles */
         /* Print Styles (Remain basic) */
         @media print { /* ... print styles ... */ }
+
+        /* --- Responsive Styles --- */
+        @media (max-width: 768px) {
+            body {
+                overflow: auto; /* Allow body to scroll if needed */
+                 height: auto; /* Let body height be determined by content */
+            }
+            .page-header {
+                height: 50px; /* Slightly smaller header */
+                position: relative; /* Unset sticky for simplicity or adjust if needed */
+            }
+            .page-header h1 { font-size: 1.1rem; }
+
+            .main-content {
+                flex-direction: column; /* Stack slide and explanation */
+                height: auto; /* Allow height to adjust */
+                padding: 5px; /* Equal padding */
+                overflow: visible; /* Allow content to determine height */
+            }
+
+            .slide-container {
+                width: 100%; /* Full width */
+                order: 1; /* Show slide first */
+                 align-self: auto; /* Reset alignment */
+                 justify-content: flex-start; /* Align top */
+                 height: auto; /* Let content dictate height */
+                 margin-bottom: 1rem; /* Space below slide */
+            }
+
+            .slide-frame {
+                 /* Adjust aspect ratio slightly if needed, or keep it */
+                 /* aspect-ratio: 16 / 9; */
+                 margin: 0; /* Reset margin */
+            }
+            .slide-container:hover .slide-frame {
+                transform: none; /* Disable hover transform on mobile */
+                box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6); /* Reset shadow */
+            }
+
+            .controls-area {
+                /* Optional: Adjust controls layout if needed */
+                /* justify-content: space-between; */
+                gap: 0.5rem;
+                height: auto; /* Allow wrap if necessary */
+                 padding: 5px;
+                 flex-wrap: wrap; /* Allow wrapping */
+            }
+            .progress-bar-container {
+                 /* Optional: Make progress bar shorter */
+                 width: 120px;
+                 margin-right: 0; /* Remove auto margin */
+                 order: 2; /* Place it potentially after other controls if wrapped */
+            }
+             .control-group {
+                 order: 1; /* Ensure essential controls come first */
+                 margin-left: auto; /* Push controls right */
+             }
+
+            .explanation-container {
+                width: 100%; /* Full width */
+                order: 2; /* Show explanation second */
+                height: auto; /* Adjust height based on content */
+                max-height: 45vh; /* Limit explanation height */
+                 align-self: auto; /* Reset alignment */
+                padding: 0.8rem; /* Adjust padding */
+                overflow: hidden; /* Keep hidden */
+            }
+            .explanation-content-wrapper {
+                padding-right: 0; /* Remove padding (mobile scrollbars often overlay) */
+            }
+
+            .explanation-container h3 { font-size: 0.95rem; }
+            #slideExplanation { font-size: 0.9rem; line-height: 1.6; }
+
+            .nav-controls { padding: 0 0.5rem; } /* Reduce nav arrow padding */
+            .nav-button { width: 36px; height: 36px; } /* Slightly smaller nav buttons */
+        }
+
+         @media (max-width: 480px) {
+             /* Further adjustments for very small screens if needed */
+             .page-header h1 { font-size: 1rem; }
+             .progress-bar-container { width: 100px; }
+             .control-group span { font-size: 0.8em; }
+             .control-group button { font-size: 1em; }
+             .explanation-container h3 { font-size: 0.9rem; }
+            #slideExplanation { font-size: 0.85rem; line-height: 1.55; }
+         }
 
     </style>
 </head>
@@ -139,9 +251,7 @@
              <div class="controls-area">
                 <div class="progress-bar-container"><div id="progressBar" class="progress-bar"></div></div>
                 <div class="control-group">
-
                     <span id="slideInfo">1 / 16</span>
-
                     <button id="toggleFullscreen" title="Toggle Fullscreen (F)"> <i class="fas fa-expand"></i> </button>
                 </div>
              </div>
@@ -149,171 +259,165 @@
 
         <div class="explanation-container">
              <h3 id="explanationTitle">Slide 1: Explanation</h3>
-            <div id="slideExplanation"> Loading explanation... </div>
+             {/* Added wrapper for scrolling content */}
+             <div class="explanation-content-wrapper">
+                <div id="slideExplanation"> Loading explanation... </div>
+             </div>
         </div>
 
     </div>
 
-
-
+    {/* JavaScript remains the same as the previous version using slides.json */}
     <script>
-        document.addEventListener('DOMContentLoaded', async function() { // Make async
+         document.addEventListener('DOMContentLoaded', async function() {
 
-           // --- Configuration Variables (will be loaded from slides.json) ---
-           let totalSlides = 0;
-           let slideExplanations = [];
+            // --- Configuration Variables ---
+            let totalSlides = 0;
+            let slideExplanations = [];
 
-           // --- DOM Elements ---
-           const slideContainer = document.getElementById('slideContainer');
-           const slideIframe = document.getElementById('currentSlide');
-           const slideInfo = document.getElementById('slideInfo');
-           const prevBtn = document.getElementById('prevSlide');
-           const nextBtn = document.getElementById('nextSlide');
-           const progressBar = document.getElementById('progressBar');
-           const toggleFullscreenBtn = document.getElementById('toggleFullscreen');
-           const explanationContainer = document.querySelector('.explanation-container');
-           const explanationTitle = document.getElementById('explanationTitle');
-           const explanationDiv = document.getElementById('slideExplanation');
+            // --- DOM Elements ---
+            const slideContainer = document.getElementById('slideContainer');
+            const slideIframe = document.getElementById('currentSlide');
+            const slideInfo = document.getElementById('slideInfo');
+            const prevBtn = document.getElementById('prevSlide');
+            const nextBtn = document.getElementById('nextSlide');
+            const progressBar = document.getElementById('progressBar');
+            const toggleFullscreenBtn = document.getElementById('toggleFullscreen');
+            // Select the scrollable wrapper instead of the main container
+            const explanationContentWrapper = document.querySelector('.explanation-content-wrapper');
+            const explanationTitle = document.getElementById('explanationTitle');
+            const explanationDiv = document.getElementById('slideExplanation');
 
-           // --- State Variables ---
-           let currentSlide = 1;
-           let isTransitioning = false;
+            // --- State Variables ---
+            let currentSlide = 1;
+            let isTransitioning = false;
 
-           // --- Load Configuration ---
-           async function loadConfig() {
-               try {
-                   const response = await fetch('slides.json'); // Fetch the config file
-                   if (!response.ok) {
-                       throw new Error(`HTTP error! status: ${response.status}`);
-                   }
-                   const config = await response.json(); // Parse JSON
-
-                   // Validate and assign config
-                   if (typeof config.totalSlides !== 'number' || config.totalSlides <= 0) {
-                        throw new Error('Invalid totalSlides in slides.json');
-                   }
-                    if (!Array.isArray(config.slideExplanations) || config.slideExplanations.length !== config.totalSlides) {
-                        throw new Error('Slide explanations array length must match totalSlides in slides.json');
-                    }
-
-                   totalSlides = config.totalSlides;
-                   slideExplanations = config.slideExplanations;
-
-                   console.log(`Configuration loaded: ${totalSlides} slides.`);
-                   return true; // Indicate success
-
-               } catch (error) {
-                   console.error('Error loading or parsing slides.json:', error);
-                   // Display error message to the user
-                    explanationDiv.innerHTML = `<p style="color: #f87171;">Error loading configuration (slides.json). Please check the file and console for details.</p>`;
-                    explanationTitle.textContent = 'Configuration Error';
-                    // Disable navigation if config fails
+            // --- Load Configuration ---
+            async function loadConfig() {
+                try {
+                    const response = await fetch('slides.json');
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    const config = await response.json();
+                    if (typeof config.totalSlides !== 'number' || config.totalSlides <= 0) throw new Error('Invalid totalSlides');
+                    if (!Array.isArray(config.slideExplanations) || config.slideExplanations.length !== config.totalSlides) throw new Error('Explanations length mismatch');
+                    totalSlides = config.totalSlides;
+                    slideExplanations = config.slideExplanations;
+                    console.log(`Configuration loaded: ${totalSlides} slides.`);
+                    return true;
+                } catch (error) {
+                    console.error('Error loading slides.json:', error);
+                    explanationDiv.innerHTML = `<p style="color: #f87171;">Error loading configuration (slides.json).</p>`;
+                    explanationTitle.textContent = 'Error';
                     prevBtn.disabled = true;
                     nextBtn.disabled = true;
-                   return false; // Indicate failure
-               }
-           }
+                    return false;
+                }
+            }
 
-            // --- Core Application Logic (runs after config is loaded) ---
+            // --- Core Application Logic ---
             function initializeApp() {
-                // --- Initialization ---
-                initializeSlide(); // Determine starting slide
-
-                // --- Event Listeners ---
+                initializeSlide();
                 prevBtn.addEventListener('click', () => goToSlide(currentSlide - 1));
                 nextBtn.addEventListener('click', () => goToSlide(currentSlide + 1));
-                window.addEventListener('popstate', (event) => { initializeSlide(); });
+                window.addEventListener('popstate', () => { initializeSlide(); });
                 toggleFullscreenBtn.addEventListener('click', toggleFullscreen);
                 document.addEventListener('fullscreenchange', handleFullscreenChange);
                 document.addEventListener('keydown', handleKeyDown);
             }
 
+            // --- Functions ---
+             function initializeSlide() {
+                 const hash = window.location.hash;
+                 const hashMatch = hash.match(/^#slide=(\d+)$/);
+                 let startSlide = 1;
+                 if (hashMatch) {
+                     const slideNum = parseInt(hashMatch[1], 10);
+                     if (slideNum >= 1 && slideNum <= totalSlides) startSlide = slideNum;
+                 }
+                 currentSlide = startSlide;
+                 slideIframe.src = `${currentSlide}.html`;
+                 updateUI(true);
+                 slideIframe.style.opacity = 1;
+             }
 
-           // --- Functions (Keep these mostly the same, they now use loaded 'totalSlides' and 'slideExplanations') ---
+            function updateUI(isInitialLoad = false) {
+                slideInfo.textContent = `${currentSlide} / ${totalSlides}`;
+                const progressPercentage = totalSlides > 0 ? (currentSlide / totalSlides) * 100 : 0;
+                progressBar.style.width = `${progressPercentage}%`;
+                const explanationText = slideExplanations[currentSlide - 1] || "No explanation.";
+                explanationTitle.textContent = `Slide ${currentSlide}: Explanation`;
 
-            function initializeSlide() {
-                const hash = window.location.hash;
-                const hashMatch = hash.match(/^#slide=(\d+)$/);
-                let startSlide = 1;
-                if (hashMatch) {
-                    const slideNum = parseInt(hashMatch[1], 10);
-                    // Use loaded totalSlides for validation
-                    if (slideNum >= 1 && slideNum <= totalSlides) {
-                        startSlide = slideNum;
-                    }
+                if (isInitialLoad) { explanationDiv.innerHTML = explanationText; }
+                else {
+                    explanationDiv.classList.add('fade-out');
+                    setTimeout(() => {
+                        explanationDiv.innerHTML = explanationText;
+                        explanationDiv.classList.remove('fade-out');
+                        // Scroll the wrapper, not the container
+                        if (explanationContentWrapper) explanationContentWrapper.scrollTop = 0;
+                    }, 300);
                 }
-                currentSlide = startSlide;
-                slideIframe.src = `${currentSlide}.html`;
-                updateUI(true);
-                slideIframe.style.opacity = 1;
+
+                if (!isInitialLoad) history.pushState(null, null, `#slide=${currentSlide}`);
+                else history.replaceState(null, null, `#slide=${currentSlide}`);
+                prevBtn.disabled = currentSlide === 1;
+                nextBtn.disabled = currentSlide === totalSlides;
             }
 
-           function updateUI(isInitialLoad = false) {
-               // Use loaded totalSlides and slideExplanations
-               slideInfo.textContent = `${currentSlide} / ${totalSlides}`;
-               const progressPercentage = totalSlides > 0 ? (currentSlide / totalSlides) * 100 : 0;
-               progressBar.style.width = `${progressPercentage}%`;
-               const explanationText = slideExplanations[currentSlide - 1] || "No explanation available."; // Array is 0-indexed
-               explanationTitle.textContent = `Slide ${currentSlide}: Explanation`;
+            function goToSlide(slideNumber, isInitialLoad = false) {
+                 if (isTransitioning || (slideNumber === currentSlide && !isInitialLoad)) return;
+                 const targetSlide = Math.max(1, Math.min(slideNumber, totalSlides));
+                 if (targetSlide === currentSlide && !isInitialLoad) return;
+                 isTransitioning = true;
+                 currentSlide = targetSlide;
+                 slideIframe.style.opacity = 0;
+                 slideIframe.onload = () => {
+                     slideIframe.style.opacity = 1;
+                     isTransitioning = false;
+                     slideIframe.onload = null;
+                 };
+                 setTimeout(() => { slideIframe.src = `${currentSlide}.html`; }, 50);
+                 updateUI(false);
+            }
 
-               if (isInitialLoad) { explanationDiv.innerHTML = explanationText; }
-               else { explanationDiv.classList.add('fade-out'); setTimeout(() => { explanationDiv.innerHTML = explanationText; explanationDiv.classList.remove('fade-out'); explanationContainer.scrollTop = 0; }, 300); }
+            function handleKeyDown(e) {
+                if (document.activeElement && ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
+                let slideChanged = false;
+                 if (e.key === 'ArrowLeft' || e.key === 'PageUp') { goToSlide(currentSlide - 1); slideChanged = true; }
+                 else if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { goToSlide(currentSlide + 1); slideChanged = true; }
+                 else if (e.key === 'Home') { goToSlide(1); slideChanged = true; }
+                 else if (e.key === 'End') { goToSlide(totalSlides); slideChanged = true; }
+                 else if (e.key >= '1' && e.key <= '9') { const num = parseInt(e.key); if (num <= totalSlides) { goToSlide(num); slideChanged = true; } }
+                 else if (e.key === 'f' || e.key === 'F') { toggleFullscreen(); slideChanged = true; }
+                if (slideChanged) e.preventDefault();
+            }
 
-               if (!isInitialLoad) { history.pushState(null, null, `#slide=${currentSlide}`); }
-               else { history.replaceState(null, null, `#slide=${currentSlide}`); }
+            function toggleFullscreen() {
+                 // Attempt to fullscreen the slide container div for better control
+                 const elemToFullscreen = slideContainer || document.documentElement;
+                 if (!document.fullscreenElement) {
+                     elemToFullscreen.requestFullscreen().catch(err => console.error(`FS error: ${err.message}`));
+                 } else {
+                     if (document.exitFullscreen) document.exitFullscreen();
+                 }
+             }
 
-               prevBtn.disabled = currentSlide === 1;
-               nextBtn.disabled = currentSlide === totalSlides;
-           }
+            function handleFullscreenChange() {
+                 const icon = toggleFullscreenBtn.querySelector('i');
+                 if (!document.fullscreenElement) {
+                     if(icon) icon.classList.replace('fa-compress', 'fa-expand');
+                 } else {
+                     if(icon) icon.classList.replace('fa-expand', 'fa-compress');
+                 }
+             }
 
-           function goToSlide(slideNumber, isInitialLoad = false) {
-                if (isTransitioning || (slideNumber === currentSlide && !isInitialLoad)) { return; }
-
-               // Use loaded totalSlides for bounds check
-               const targetSlide = Math.max(1, Math.min(slideNumber, totalSlides));
-
-                if (targetSlide === currentSlide && !isInitialLoad) { return; }
-
-               isTransitioning = true;
-               currentSlide = targetSlide;
-
-               slideIframe.style.opacity = 0;
-               slideIframe.onload = () => {
-                   slideIframe.style.opacity = 1;
-                   isTransitioning = false;
-                   slideIframe.onload = null;
-               };
-               setTimeout(() => { slideIframe.src = `${currentSlide}.html`; }, 50);
-               updateUI(false);
-           }
-
-           function handleKeyDown(e) {
-               if (document.activeElement && ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
-               let slideChanged = false;
-                if (e.key === 'ArrowLeft' || e.key === 'PageUp') { goToSlide(currentSlide - 1); slideChanged = true; }
-                else if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { goToSlide(currentSlide + 1); slideChanged = true; }
-                else if (e.key === 'Home') { goToSlide(1); slideChanged = true; }
-                // Use loaded totalSlides for End key
-                else if (e.key === 'End') { goToSlide(totalSlides); slideChanged = true; }
-                // Use loaded totalSlides for number keys
-                else if (e.key >= '1' && e.key <= '9') { const num = parseInt(e.key); if (num <= totalSlides) { goToSlide(num); slideChanged = true; } }
-                else if (e.key === 'f' || e.key === 'F') { toggleFullscreen(); slideChanged = true; }
-
-               if (slideChanged) e.preventDefault();
-           }
-
-           function toggleFullscreen() { /* ... same ... */ }
-           function handleFullscreenChange() { /* ... same ... */ }
-
-
-           // --- Main Execution ---
-           const configLoaded = await loadConfig(); // Wait for config to load
-           if (configLoaded) {
-               initializeApp(); // Run the main app logic only if config loaded successfully
-           }
-
-       });
-   </script>
+            // --- Main Execution ---
+            const configLoaded = await loadConfig();
+            if (configLoaded) {
+                initializeApp();
+            }
+        });
+    </script>
 
 </body>
 </html>
