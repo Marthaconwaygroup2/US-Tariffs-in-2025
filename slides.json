@@ -1,21 +1,21 @@
 {
     "totalSlides": 16,
     "slideExplanations": [
-      "Slide 1 explanation details...",
-      "Slide 2 details...",
-      "Slide 3 details...",
-      "Slide 4 details...",
-      "Slide 5 details...",
-      "Slide 6 details...",
-      "Slide 7 details...",
-      "Slide 8 details...",
-      "Slide 9 details...",
-      "Slide 10 details...",
-      "Slide 11 details...",
-      "Slide 12 details...",
-      "Slide 13 details...",
-      "Slide 14 details...",
-      "Slide 15 details...",
-      "Slide 16 details..."
+        "Slide 1 explanation: The slide presents a data visualization of the projected impacts of US tariffs in 2025. It shows a 10% baseline tariff on all US imports, which is expected to result in a 0.3% contraction in US GDP for Q1 2025 and an additional household cost of $3,800 per year. The world map graphic with tariff arrows suggests these effects will create ripple effects across global trade relationships and supply chains. The analysis is dated May 2025.",
+        "Slide 2 details...",
+        "Slide 3 details...",
+        "Slide 4 details...",
+        "Slide 5 details...",
+        "Slide 6 details...",
+        "Slide 7 details...",
+        "Slide 8 details...",
+        "Slide 9 details...",
+        "Slide 10 details...",
+        "Slide 11 details...",
+        "Slide 12 details...",
+        "Slide 13 details...",
+        "Slide 14 details...",
+        "Slide 15 details...",
+        "Slide 16 details..."
     ]
-  }
+}
