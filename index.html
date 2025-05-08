@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         tailwind.config = {
@@ -29,114 +29,184 @@
     <style>
         *, *::before, *::after { box-sizing: border-box; }
         html { height: 100%; }
+        :root {
+            --accent-color: #38bdf8;
+            --text-color: #f1f5f9;
+            --muted-text: #cbd5e1;
+            --bg-gradient-start: rgba(15, 23, 42, 0.98);
+            --bg-gradient-end: rgba(23, 31, 56, 1);
+        }
+        
         body {
              height: 100%;
-             background: radial-gradient(circle at 20% 30%, rgba(49, 46, 129, 0.4) 0%, rgba(15, 23, 42, 0.3) 30%, rgba(15, 23, 42, 0.7) 70%),
-                         radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.3) 0%, rgba(15, 23, 42, 0.5) 40%, rgba(15, 23, 42, 0.9) 80%),
-                         #0f172a;
+             background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
              background-attachment: fixed;
-             color: var(--lightText, #e5e7eb); display: flex; flex-direction: column; font-family: 'Inter', sans-serif; overflow: hidden; /* Keep overflow hidden for body */
-             opacity: 0; animation: fadeIn 0.5s 0.1s ease-out forwards;
-             -webkit-tap-highlight-color: transparent; /* Improve mobile tap feel */
+             color: var(--text-color, #f1f5f9); display: flex; flex-direction: column; font-family: 'Inter', sans-serif; font-feature-settings: "ss01", "ss02", "cv01", "cv02"; font-variation-settings: "wght" 400; overflow: hidden;
+             opacity: 0; animation: fadeIn 0.4s 0.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+             -webkit-tap-highlight-color: transparent;
         }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
         .page-header {
-            flex-shrink: 0; padding: 0.8rem 1rem; text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            background: rgba(15, 23, 42, 0.3); backdrop-filter: blur(5px);
-            height: 55px; display: flex; flex-direction: column; justify-content: center;
-            position: sticky; top: 0; z-index: 50; /* Make header sticky */
+            flex-shrink: 0; padding: 0.8rem 1.5rem; text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            background: rgba(15, 23, 42, 0.2); backdrop-filter: blur(12px);
+            height: 60px; display: flex; flex-direction: column; justify-content: center;
+            position: sticky; top: 0; z-index: 50;
         }
-        .page-header h1 { font-size: 1.3rem; font-weight: 600; letter-spacing: 0.03em; color: #e5e7eb; margin: 0; }
+        .page-header h1 { font-size: 1.2rem; font-variation-settings: "wght" 500; letter-spacing: 0.05em; color: var(--text-color, #f1f5f9); margin: 0; text-transform: uppercase; }
 
         .main-content {
              flex-grow: 1; display: flex; flex-direction: row;
-             padding: 5px 5px 5px 2px;
-             gap: 5px; overflow: hidden; /* Hide overflow here on desktop */
+             padding: 16px 16px 16px 12px;
+             gap: 16px; overflow: hidden;
              align-items: center;
-             /* Desktop height calculation - might be overridden on mobile */
-             height: calc(100vh - 55px); /* Adjusted for sticky header */
+             height: calc(100vh - 60px);
         }
 
         .slide-container {
              width: 78%; position: relative; display: flex; flex-direction: column;
-             align-self: stretch; /* Make it stretch vertically in flex container */
-             justify-content: center; /* Center content vertically */
+             align-self: stretch;
+             justify-content: center;
         }
 
         .slide-frame {
-             width: 100%; aspect-ratio: 16 / 8.8;
-             position: relative; overflow: hidden; border-radius: 0.5rem;
-             background-color: var(--secondaryDark, #111827);
-             border: 1px solid var(--panelBorder, rgba(255, 255, 255, 0.08));
-             box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
-             transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
-             max-width: 100%; /* Ensure it doesn't overflow horizontally */
-             margin: auto 0; /* Center vertically within container */
+             width: 100%; aspect-ratio: 16 / 9;
+             position: relative; overflow: hidden; border-radius: 8px;
+             background-color: rgba(17, 24, 39, 0.4);
+             border: 1px solid rgba(255, 255, 255, 0.04);
+             box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.5);
+             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+             max-width: 100%;
+             margin: auto 0;
         }
-        .slide-container:hover .slide-frame { transform: translateY(-3px); box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.55); }
+        .slide-container:hover .slide-frame { transform: translateY(-4px); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6); }
 
         .slide-iframe {
-            width: 100%; height: 100%; display: block; /* Prevent extra space below iframe */
-            background-color: var(--secondaryDark, #111827);
-            overflow: hidden; border: none; border-radius: 0.5rem;
-            opacity: 1; transition: opacity 0.3s ease-in-out;
+            width: 100%; height: 100%; display: block;
+            background-color: rgba(17, 24, 39, 0.4);
+            overflow: hidden; border: none; border-radius: 8px;
+            opacity: 1; transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .explanation-container {
-            width: 22%; padding: 1rem 0.5rem 1rem 1rem;
-            color: var(--lightText, #e5e7eb);
-            align-self: stretch; /* Make it stretch vertically */
-            display: flex; flex-direction: column; /* Use flex for internal layout */
-            overflow: hidden; /* Hide overflow here */
+            width: 22%; padding: 1.25rem 1rem;
+            color: var(--lightText, #f1f5f9);
+            align-self: stretch;
+            display: flex; flex-direction: column;
+            overflow: hidden;
+            background: rgba(17, 24, 39, 0.2);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
         }
-        .explanation-content-wrapper { /* Added wrapper for scrolling */
+        .explanation-content-wrapper {
             overflow-y: auto;
-            flex-grow: 1; /* Allow wrapper to take available space */
-            overscroll-behavior: contain; /* Prevent scroll chaining */
-            padding-right: 5px; /* Space for scrollbar */
+            flex-grow: 1;
+            overscroll-behavior: contain;
+            padding-right: 8px;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
         }
 
         #slideExplanation {
-             font-size: 1rem; line-height: 1.65; padding-top: 0.5rem;
-             opacity: 1; transition: opacity 0.3s ease-in-out;
-             color: var(--mutedText, #cbd5e1);
+             font-size: 0.95rem; line-height: 1.7; padding-top: 0.75rem;
+             opacity: 1; transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+             color: rgba(241, 245, 249, 0.8);
         }
         #slideExplanation.fade-out { opacity: 0; }
         .explanation-container h3 {
-             font-size: 1rem; font-weight: 600; color: var(--lightText, #e5e7eb);
-             margin-bottom: 0.5rem; padding-bottom: 0.5rem;
-             border-bottom: 1px solid var(--panelBorder, rgba(255, 255, 255, 0.08));
-             flex-shrink: 0; /* Prevent title from shrinking */
+             font-size: 0.95rem; font-weight: 500; color: #f1f5f9;
+             margin-bottom: 0.75rem; padding-bottom: 0.75rem;
+             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+             flex-shrink: 0;
+             letter-spacing: 0.03em;
         }
 
         .controls-area {
-            flex-shrink: 0; height: 45px; background: transparent;
+            flex-shrink: 0; height: 50px; background: transparent;
             display: flex; align-items: center; justify-content: flex-end;
-            padding: 5px 0.5rem 0 0.5rem; gap: 0.8rem; margin-top: 8px;
+            padding: 8px 0.5rem; gap: 1rem; margin-top: 12px;
         }
-        .control-group { display: flex; align-items: center; gap: 0.8rem; color: var(--lightText, #e5e7eb); font-size: 0.9rem; font-weight: 400; }
-         .control-group button { background: none; border: none; color: var(--mutedText, #cbd5e1); padding: 5px; cursor: pointer; transition: color 0.2s ease; line-height: 1; font-size: 1.1em; }
-         .control-group button:hover { color: var(--accentBlue, #38bdf8); }
-         .control-group span { font-family: monospace; font-size: 0.9em; color: var(--mutedText, #cbd5e1); }
+        .control-group { display: flex; align-items: center; gap: 1rem; color: var(--text-color, #f1f5f9); font-size: 0.9rem; font-variation-settings: "wght" 400; }
+         .control-group button { background: none; border: none; color: rgba(241, 245, 249, 0.7); padding: 6px; cursor: pointer; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); line-height: 1; font-size: 1.05em; position: relative; }
+         .control-group button .shortcut-hint { position: absolute; bottom: -18px; left: 50%; transform: translateX(-50%); font-size: 0.65rem; background: rgba(0, 0, 0, 0.6); padding: 2px 5px; border-radius: 3px; opacity: 0; transition: opacity 0.2s ease; white-space: nowrap; pointer-events: none; }
+         .control-group button:hover .shortcut-hint { opacity: 1; }
+         .control-group button:hover { color: var(--accent-color, #38bdf8); transform: translateY(-1px); }
+         .control-group span { font-family: monospace; font-size: 0.9em; color: rgba(241, 245, 249, 0.7); letter-spacing: 0.05em; }
 
-        .progress-bar-container { width: 180px; height: 4px; background-color: rgba(255, 255, 255, 0.1); border-radius: 3px; overflow: hidden; margin-right: auto; }
-        .progress-bar { height: 100%; width: 0; background-color: var(--accentBlue, #38bdf8); border-radius: 3px; transition: width 0.5s ease; }
+        /* Dark Mode Toggle */
+        .dark-mode-toggle { cursor: pointer; display: flex; align-items: center; }
+        .dark-mode-toggle i { transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+        body.dark-mode { 
+            --bg-gradient-start: rgba(10, 15, 26, 0.98);
+            --bg-gradient-end: rgba(17, 24, 39, 1);
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%); 
+        }
+        
+        /* Custom Scrollbar Styling */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); border-radius: 8px; }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.08); border-radius: 8px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(var(--accent-color-rgb, 56, 189, 248), 0.2); }
+        
+        /* Subtle animations */
+        .control-group button i { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .control-group button:hover i { transform: translateY(-1px); }
+        /* Enhanced slide transitions */
+        .slide-iframe { animation: fadeScale 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes fadeScale { from { opacity: 0.8; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+        
+        /* Additional slide transition animations */
+        .slide-iframe.transition-fade { animation: transitionFade 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        .slide-iframe.transition-slide-left { animation: transitionSlideLeft 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        .slide-iframe.transition-slide-right { animation: transitionSlideRight 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        .slide-iframe.transition-zoom { animation: transitionZoom 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        
+        @keyframes transitionFade { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes transitionSlideLeft { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes transitionSlideRight { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes transitionZoom { from { opacity: 0; transform: scale(1.1); } to { opacity: 1; transform: scale(1); } }
+        
+        /* Search Modal */
+        .search-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 100; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+        .search-container { background: rgba(17, 24, 39, 0.8); border: 1px solid rgba(255, 255, 255, 0.04); border-radius: 12px; padding: 1.75rem; width: 90%; max-width: 500px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+        .search-container h3 { margin-top: 0; color: #f1f5f9; font-weight: 500; letter-spacing: 0.03em; font-size: 1.1rem; }
+        .search-input { width: 100%; padding: 0.85rem; background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(255, 255, 255, 0.04); border-radius: 8px; color: #f1f5f9; margin-bottom: 1.25rem; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .search-input:focus { outline: none; border-color: rgba(56, 189, 248, 0.5); box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2); }
+        .search-results { max-height: 300px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.1) transparent; }
+        .search-result-item { padding: 0.75rem; cursor: pointer; border-radius: 8px; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); margin-bottom: 4px; }
+        .search-result-item:hover { background: rgba(56, 189, 248, 0.15); transform: translateY(-1px); }
+        .search-close { position: absolute; top: 1.25rem; right: 1.25rem; background: none; border: none; color: rgba(241, 245, 249, 0.8); font-size: 1.25rem; cursor: pointer; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .search-close:hover { color: #f1f5f9; transform: scale(1.1); }
+        
+        /* Share Modal */
+        .share-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 100; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+        .share-container { background: rgba(17, 24, 39, 0.8); border: 1px solid rgba(255, 255, 255, 0.04); border-radius: 12px; padding: 1.75rem; width: 90%; max-width: 400px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+        .share-container h3 { margin-top: 0; color: #f1f5f9; font-weight: 500; letter-spacing: 0.03em; font-size: 1.1rem; }
+        .share-buttons { display: flex; justify-content: space-around; margin: 1.25rem 0; }
+        .share-button { background: none; border: none; color: rgba(241, 245, 249, 0.8); font-size: 1.4rem; cursor: pointer; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); padding: 8px; }
+        .share-button:hover { color: #38bdf8; transform: translateY(-2px); }
+        .share-link { width: 100%; padding: 0.85rem; background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(255, 255, 255, 0.04); border-radius: 8px; color: #f1f5f9; margin-bottom: 0.5rem; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .share-link:focus { outline: none; border-color: rgba(56, 189, 248, 0.5); box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2); }
+        .share-close { position: absolute; top: 1.25rem; right: 1.25rem; background: none; border: none; color: rgba(241, 245, 249, 0.8); font-size: 1.25rem; cursor: pointer; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .share-close:hover { color: #f1f5f9; transform: scale(1.1); }
+
+        /* Progress indicators removed */
+
 
         .nav-controls {
              position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-             display: flex; justify-content: space-between; align-items: center; padding: 0 1rem; opacity: 0; transition: opacity 0.3s ease-in-out; z-index: 20; pointer-events: none;
+             display: flex; justify-content: space-between; align-items: center; padding: 0 1.25rem; opacity: 0; transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1); z-index: 20; pointer-events: none;
         }
         /* Make nav arrows visible on touch devices without hover */
         @media (hover: none) {
-            .nav-controls { opacity: 0.6; } /* Show slightly dimmed arrows */
+            .nav-controls { opacity: 0.7; }
         }
-        .slide-frame:hover .nav-controls { opacity: 1; } /* Full opacity on hover still */
+        .slide-frame:hover .nav-controls { opacity: 1; }
 
-        .nav-button { background: rgba(17, 24, 39, 0.5); backdrop-filter: blur(5px); border: 1px solid var(--panelBorder, rgba(255, 255, 255, 0.08)); color: var(--mutedText, #cbd5e1); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; pointer-events: auto; }
-        .nav-button:hover { background: rgba(30, 41, 59, 0.7); color: var(--lightText, #e5e7eb); transform: scale(1.05); }
-        .nav-button:disabled { opacity: 0.4; cursor: not-allowed; transform: scale(1); pointer-events: none; }
+        .nav-button { background: rgba(17, 24, 39, 0.6); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.04); color: rgba(241, 245, 249, 0.8); width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: auto; }
+        .nav-button:hover { background: rgba(30, 41, 59, 0.8); color: #f1f5f9; transform: scale(1.05); box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.5); }
+        .nav-button:disabled { opacity: 0.3; cursor: not-allowed; transform: scale(1); pointer-events: none; }
 
         /* Removed Modal Styles */
         /* Print Styles (Remain basic) */
@@ -145,88 +215,124 @@
         /* --- Responsive Styles --- */
         @media (max-width: 768px) {
             body {
-                overflow: auto; /* Allow body to scroll if needed */
-                 height: auto; /* Let body height be determined by content */
+                overflow: auto;
+                height: auto;
             }
             .page-header {
-                height: 50px; /* Slightly smaller header */
-                position: relative; /* Unset sticky for simplicity or adjust if needed */
+                height: 55px;
+                position: sticky;
+                padding: 0.7rem 1rem;
+                z-index: 10;
             }
-            .page-header h1 { font-size: 1.1rem; }
+            .page-header h1 { font-size: 1rem; letter-spacing: 0.06em; }
 
             .main-content {
-                flex-direction: column; /* Stack slide and explanation */
-                height: auto; /* Allow height to adjust */
-                padding: 5px; /* Equal padding */
-                overflow: visible; /* Allow content to determine height */
+                flex-direction: column;
+                height: auto;
+                padding: 12px;
+                gap: 16px;
+                overflow: visible;
             }
 
             .slide-container {
-                width: 100%; /* Full width */
-                order: 1; /* Show slide first */
-                 align-self: auto; /* Reset alignment */
-                 justify-content: flex-start; /* Align top */
-                 height: auto; /* Let content dictate height */
-                 margin-bottom: 1rem; /* Space below slide */
+                width: 100%;
+                order: 1;
+                align-self: auto;
+                justify-content: flex-start;
+                height: auto;
+                margin-bottom: 16px;
             }
 
             .slide-frame {
-                 /* Adjust aspect ratio slightly if needed, or keep it */
-                 /* aspect-ratio: 16 / 9; */
-                 margin: 0; /* Reset margin */
+                /* Adjust aspect ratio to ensure full visibility on mobile */
+                aspect-ratio: 16 / 9;
+                width: 100%;
+                margin: 0;
+                box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.4);
             }
             .slide-container:hover .slide-frame {
-                transform: none; /* Disable hover transform on mobile */
-                box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6); /* Reset shadow */
+                transform: none;
+                box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.4);
+            }
+
+            .slide-iframe {
+                width: 100%;
+                height: 100%;
+                /* Ensure content scales properly within iframe */
+                transform-origin: top left;
             }
 
             .controls-area {
-                /* Optional: Adjust controls layout if needed */
-                /* justify-content: space-between; */
-                gap: 0.5rem;
-                height: auto; /* Allow wrap if necessary */
-                 padding: 5px;
-                 flex-wrap: wrap; /* Allow wrapping */
+                justify-content: space-between;
+                gap: 0.75rem;
+                height: auto;
+                padding: 8px 4px;
+                flex-wrap: wrap;
+                margin-top: 8px;
             }
             .progress-bar-container {
-                 /* Optional: Make progress bar shorter */
-                 width: 120px;
-                 margin-right: 0; /* Remove auto margin */
-                 order: 2; /* Place it potentially after other controls if wrapped */
+                width: 100px;
+                margin-right: 0;
+                order: 2; /* Place it potentially after other controls if wrapped */
+                height: 2px;
             }
-             .control-group {
-                 order: 1; /* Ensure essential controls come first */
-                 margin-left: auto; /* Push controls right */
-             }
-
+            .control-group {
+                order: 1; /* Ensure essential controls come first */
+                margin-left: auto; /* Push controls right */
+                gap: 0.75rem;
+            }
+            .control-group button { font-size: 0.95em; padding: 5px; }
+            
             .explanation-container {
-                width: 100%; /* Full width */
-                order: 2; /* Show explanation second */
-                height: auto; /* Adjust height based on content */
-                max-height: 45vh; /* Limit explanation height */
-                 align-self: auto; /* Reset alignment */
-                padding: 0.8rem; /* Adjust padding */
-                overflow: hidden; /* Keep hidden */
+                width: 100%;
+                order: 2; /* Explicitly place explanation below slide */
+                height: auto;
+                max-height: none; /* Allow content to determine height */
+                align-self: auto;
+                padding: 1rem;
+                overflow: hidden;
+                margin-bottom: 12px;
             }
             .explanation-content-wrapper {
-                padding-right: 0; /* Remove padding (mobile scrollbars often overlay) */
+                padding-right: 0;
+                max-height: 50vh; /* Limit height but allow scrolling */
+                overflow-y: auto;
             }
 
-            .explanation-container h3 { font-size: 0.95rem; }
-            #slideExplanation { font-size: 0.9rem; line-height: 1.6; }
+            .explanation-container h3 { font-size: 0.9rem; margin-bottom: 0.6rem; padding-bottom: 0.6rem; }
+            #slideExplanation { font-size: 0.85rem; line-height: 1.6; padding-top: 0.5rem; }
 
-            .nav-controls { padding: 0 0.5rem; } /* Reduce nav arrow padding */
-            .nav-button { width: 36px; height: 36px; } /* Slightly smaller nav buttons */
+            .nav-controls { padding: 0 0.5rem; }
+            .nav-button { width: 40px; height: 40px; }
         }
 
          @media (max-width: 480px) {
-             /* Further adjustments for very small screens if needed */
-             .page-header h1 { font-size: 1rem; }
+             /* Further adjustments for very small screens */
+             .page-header h1 { font-size: 0.95rem; }
              .progress-bar-container { width: 100px; }
              .control-group span { font-size: 0.8em; }
-             .control-group button { font-size: 1em; }
-             .explanation-container h3 { font-size: 0.9rem; }
-            #slideExplanation { font-size: 0.85rem; line-height: 1.55; }
+             .control-group button { font-size: 0.95em; padding: 4px; }
+             .control-group button .shortcut-hint { bottom: -16px; font-size: 0.6rem; }
+             
+             /* Ensure slide is fully visible */
+             .slide-frame {
+                 aspect-ratio: 16 / 9;
+                 width: 100%;
+             }
+             
+             /* Optimize controls for small screens */
+             .controls-area {
+                 padding: 6px 2px;
+                 gap: 0.5rem;
+             }
+             
+             /* Improve explanation section for small screens */
+             .explanation-container { padding: 0.75rem; }
+             .explanation-container h3 { font-size: 0.85rem; margin-bottom: 0.5rem; padding-bottom: 0.5rem; }
+             #slideExplanation { font-size: 0.8rem; line-height: 1.5; padding-top: 0.4rem; }
+             
+             /* Adjust navigation buttons */
+             .nav-button { width: 36px; height: 36px; }
          }
 
     </style>
@@ -249,10 +355,14 @@
             </div>
 
              <div class="controls-area">
-                <div class="progress-bar-container"><div id="progressBar" class="progress-bar"></div></div>
                 <div class="control-group">
                     <span id="slideInfo">1 / 16</span>
-                    <button id="toggleFullscreen" title="Toggle Fullscreen (F)"> <i class="fas fa-expand"></i> </button>
+                    <button id="toggleFullscreen" title="Toggle Fullscreen (F)"> <i class="fas fa-expand"></i> <span class="shortcut-hint">F</span> </button>
+                    <button id="toggleDarkMode" title="Toggle Dark Mode (D)"> <i class="fas fa-moon"></i> <span class="shortcut-hint">D</span> </button>
+                    <button id="openSearch" title="Search Slides (S)"> <i class="fas fa-search"></i> <span class="shortcut-hint">S</span> </button>
+                    <button id="printSlide" title="Print Current Slide (P)"> <i class="fas fa-print"></i> <span class="shortcut-hint">P</span> </button>
+                    <button id="downloadSlide" title="Download Slide (O)"> <i class="fas fa-download"></i> <span class="shortcut-hint">O</span> </button>
+                    <button id="shareSlide" title="Share Slide"> <i class="fas fa-share-alt"></i> </button>
                 </div>
              </div>
         </div>
@@ -262,8 +372,36 @@
              <div class="explanation-content-wrapper">
                 <div id="slideExplanation"> Loading explanation... </div>
              </div>
+             
+             <!-- Slide dots indicator -->
+             <div class="slide-dots-container" id="slideDots"></div>
         </div>
 
+    </div>
+
+    <!-- Search Modal -->
+    <div id="searchModal" class="search-modal">
+        <div class="search-container">
+            <h3>Search Slides</h3>
+            <input type="text" id="searchInput" class="search-input" placeholder="Enter search term...">
+            <div id="searchResults" class="search-results"></div>
+            <button class="search-close" id="closeSearch"><i class="fas fa-times"></i></button>
+        </div>
+    </div>
+
+    <!-- Share Modal -->
+    <div id="shareModal" class="share-modal">
+        <div class="share-container">
+            <h3>Share This Slide</h3>
+            <div class="share-buttons">
+                <button class="share-button" id="shareTwitter"><i class="fab fa-twitter"></i></button>
+                <button class="share-button" id="shareFacebook"><i class="fab fa-facebook"></i></button>
+                <button class="share-button" id="shareLinkedIn"><i class="fab fa-linkedin"></i></button>
+                <button class="share-button" id="shareEmail"><i class="fas fa-envelope"></i></button>
+            </div>
+            <input type="text" id="shareLink" class="share-link" readonly>
+            <button class="share-close" id="closeShare"><i class="fas fa-times"></i></button>
+        </div>
     </div>
 
     <script>
@@ -285,6 +423,27 @@
             const explanationContentWrapper = document.querySelector('.explanation-content-wrapper');
             const explanationTitle = document.getElementById('explanationTitle');
             const explanationDiv = document.getElementById('slideExplanation');
+            
+            // New feature elements
+            const toggleDarkModeBtn = document.getElementById('toggleDarkMode');
+            const openSearchBtn = document.getElementById('openSearch');
+            const printSlideBtn = document.getElementById('printSlide');
+            const downloadSlideBtn = document.getElementById('downloadSlide');
+            const shareSlideBtn = document.getElementById('shareSlide');
+            
+            // Modal elements
+            const searchModal = document.getElementById('searchModal');
+            const searchInput = document.getElementById('searchInput');
+            const searchResults = document.getElementById('searchResults');
+            const closeSearchBtn = document.getElementById('closeSearch');
+            
+            const shareModal = document.getElementById('shareModal');
+            const shareLink = document.getElementById('shareLink');
+            const closeShareBtn = document.getElementById('closeShare');
+            const shareTwitterBtn = document.getElementById('shareTwitter');
+            const shareFacebookBtn = document.getElementById('shareFacebook');
+            const shareLinkedInBtn = document.getElementById('shareLinkedIn');
+            const shareEmailBtn = document.getElementById('shareEmail');
 
             // --- State Variables ---
             let currentSlide = 1;
@@ -315,12 +474,254 @@
             // --- Core Application Logic ---
             function initializeApp() {
                 initializeSlide();
-                prevBtn.addEventListener('click', () => goToSlide(currentSlide - 1));
-                nextBtn.addEventListener('click', () => goToSlide(currentSlide + 1));
+                prevBtn.addEventListener('click', () => goToSlide(currentSlide - 1, false, 'prev'));
+                nextBtn.addEventListener('click', () => goToSlide(currentSlide + 1, false, 'next'));
                 window.addEventListener('popstate', () => { initializeSlide(); });
                 toggleFullscreenBtn.addEventListener('click', toggleFullscreen);
                 document.addEventListener('fullscreenchange', handleFullscreenChange);
                 document.addEventListener('keydown', handleKeyDown);
+                
+                // Initialize new features
+                initDarkMode();
+                initSearch();
+                initPrint();
+                initDownload();
+                initShare();
+            }
+            
+            // --- New Feature Functions ---
+            
+            // Theme color customization and slide dots functions removed
+            
+            // Slide dots function removed
+            
+            // Enhanced slide transitions
+            function applySlideTransition(direction) {
+                slideIframe.className = 'slide-iframe';
+                
+                // Apply different transition based on direction
+                if (direction === 'next') {
+                    slideIframe.classList.add('transition-slide-left');
+                } else if (direction === 'prev') {
+                    slideIframe.classList.add('transition-slide-right');
+                } else if (direction === 'jump') {
+                    slideIframe.classList.add('transition-zoom');
+                } else {
+                    slideIframe.classList.add('transition-fade');
+                }
+            }
+            
+            // Dark Mode
+            function initDarkMode() {
+                // Check for saved preference
+                const darkModePref = localStorage.getItem('darkMode');
+                if (darkModePref === 'enabled') {
+                    document.body.classList.add('dark-mode');
+                    toggleDarkModeBtn.querySelector('i').classList.replace('fa-moon', 'fa-sun');
+                }
+                
+                toggleDarkModeBtn.addEventListener('click', () => {
+                    document.body.classList.toggle('dark-mode');
+                    const icon = toggleDarkModeBtn.querySelector('i');
+                    
+                    if (document.body.classList.contains('dark-mode')) {
+                        icon.classList.replace('fa-moon', 'fa-sun');
+                        localStorage.setItem('darkMode', 'enabled');
+                    } else {
+                        icon.classList.replace('fa-sun', 'fa-moon');
+                        localStorage.setItem('darkMode', 'disabled');
+                    }
+                });
+            }
+            
+            // Search
+            function initSearch() {
+                openSearchBtn.addEventListener('click', openSearch);
+                closeSearchBtn.addEventListener('click', closeSearch);
+                searchInput.addEventListener('input', performSearch);
+                
+                // Close modal when clicking outside
+                searchModal.addEventListener('click', (e) => {
+                    if (e.target === searchModal) closeSearch();
+                });
+            }
+            
+            function openSearch() {
+                searchModal.style.display = 'flex';
+                searchInput.focus();
+                performSearch(); // Initial search with empty input
+            }
+            
+            function closeSearch() {
+                searchModal.style.display = 'none';
+                searchInput.value = '';
+            }
+            
+            function performSearch() {
+                const searchTerm = searchInput.value.toLowerCase();
+                searchResults.innerHTML = '';
+                
+                // Search through slide explanations
+                slideExplanations.forEach((explanation, index) => {
+                    if (explanation.toLowerCase().includes(searchTerm) || searchTerm === '') {
+                        const resultItem = document.createElement('div');
+                        resultItem.className = 'search-result-item';
+                        resultItem.innerHTML = `<strong>Slide ${index + 1}</strong>: ${highlightSearchTerm(explanation, searchTerm)}`;
+                        resultItem.addEventListener('click', () => {
+                            goToSlide(index + 1);
+                            closeSearch();
+                        });
+                        searchResults.appendChild(resultItem);
+                    }
+                });
+                
+                if (searchResults.children.length === 0) {
+                    searchResults.innerHTML = '<div class="p-2">No results found</div>';
+                }
+            }
+            
+            function highlightSearchTerm(text, term) {
+                if (term === '') return text.substring(0, 100) + '...';
+                
+                const maxLength = 100;
+                const lowerText = text.toLowerCase();
+                const index = lowerText.indexOf(term);
+                
+                if (index === -1) return text.substring(0, maxLength) + '...';
+                
+                const start = Math.max(0, index - 40);
+                const end = Math.min(text.length, index + term.length + 40);
+                let excerpt = text.substring(start, end);
+                
+                if (start > 0) excerpt = '...' + excerpt;
+                if (end < text.length) excerpt = excerpt + '...';
+                
+                // Highlight the term
+                const regex = new RegExp(term, 'gi');
+                return excerpt.replace(regex, match => `<span style="background-color: rgba(56, 189, 248, 0.3); padding: 0 2px;">${match}</span>`);
+            }
+            
+            // Print
+            function initPrint() {
+                printSlideBtn.addEventListener('click', printCurrentSlide);
+            }
+            
+            function printCurrentSlide() {
+                const iframe = document.getElementById('currentSlide');
+                const iframeContent = iframe.contentWindow;
+                
+                // Add current explanation to the print
+                const explanationText = slideExplanations[currentSlide - 1] || "No explanation.";
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = explanationText;
+                tempDiv.style.padding = '20px';
+                tempDiv.style.fontFamily = 'Inter, sans-serif';
+                tempDiv.style.maxWidth = '800px';
+                tempDiv.style.margin = '20px auto';
+                
+                // Temporarily append to iframe document
+                iframeContent.document.body.appendChild(tempDiv);
+                
+                // Print
+                iframeContent.focus();
+                iframeContent.print();
+                
+                // Remove after printing
+                setTimeout(() => {
+                    iframeContent.document.body.removeChild(tempDiv);
+                }, 1000);
+            }
+            
+            // Download
+            function initDownload() {
+                downloadSlideBtn.addEventListener('click', downloadSlide);
+            }
+            
+            function downloadSlide() {
+                const iframe = document.getElementById('currentSlide');
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                
+                // Get the HTML content
+                let htmlContent = iframeDoc.documentElement.outerHTML;
+                
+                // Add explanation as a comment
+                const explanationText = slideExplanations[currentSlide - 1] || "No explanation.";
+                htmlContent += `\n<!-- Slide Explanation: \n${explanationText}\n-->`;
+                
+                // Create blob and download
+                const blob = new Blob([htmlContent], { type: 'text/html' });
+                const url = URL.createObjectURL(blob);
+                
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `slide-${currentSlide}.html`;
+                document.body.appendChild(a);
+                a.click();
+                
+                // Cleanup
+                setTimeout(() => {
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }, 100);
+            }
+            
+            // Share
+            function initShare() {
+                shareSlideBtn.addEventListener('click', openShareModal);
+                closeShareBtn.addEventListener('click', closeShareModal);
+                
+                // Social sharing buttons
+                shareTwitterBtn.addEventListener('click', () => shareOnPlatform('twitter'));
+                shareFacebookBtn.addEventListener('click', () => shareOnPlatform('facebook'));
+                shareLinkedInBtn.addEventListener('click', () => shareOnPlatform('linkedin'));
+                shareEmailBtn.addEventListener('click', () => shareOnPlatform('email'));
+                
+                // Copy link functionality
+                shareLink.addEventListener('click', () => {
+                    shareLink.select();
+                    document.execCommand('copy');
+                    alert('Link copied to clipboard!');
+                });
+                
+                // Close modal when clicking outside
+                shareModal.addEventListener('click', (e) => {
+                    if (e.target === shareModal) closeShareModal();
+                });
+            }
+            
+            function openShareModal() {
+                const currentUrl = window.location.href;
+                shareLink.value = currentUrl;
+                shareModal.style.display = 'flex';
+            }
+            
+            function closeShareModal() {
+                shareModal.style.display = 'none';
+            }
+            
+            function shareOnPlatform(platform) {
+                const currentUrl = encodeURIComponent(window.location.href);
+                const title = encodeURIComponent(document.title);
+                const text = encodeURIComponent(`Check out this slide: ${document.title}`);
+                
+                let shareUrl;
+                
+                switch(platform) {
+                    case 'twitter':
+                        shareUrl = `https://twitter.com/intent/tweet?url=${currentUrl}&text=${text}`;
+                        break;
+                    case 'facebook':
+                        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`;
+                        break;
+                    case 'linkedin':
+                        shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${currentUrl}`;
+                        break;
+                    case 'email':
+                        shareUrl = `mailto:?subject=${title}&body=${text}%20${currentUrl}`;
+                        break;
+                }
+                
+                window.open(shareUrl, '_blank');
             }
 
             // --- Functions ---
@@ -340,36 +741,46 @@
 
             function updateUI(isInitialLoad = false) {
                 slideInfo.textContent = `${currentSlide} / ${totalSlides}`;
-                const progressPercentage = totalSlides > 0 ? (currentSlide / totalSlides) * 100 : 0;
-                progressBar.style.width = `${progressPercentage}%`;
-                const explanationText = slideExplanations[currentSlide - 1] || "No explanation.";
+                prevBtn.disabled = currentSlide <= 1;
+                nextBtn.disabled = currentSlide >= totalSlides;
+                
+                // Update explanation
                 explanationTitle.textContent = `Slide ${currentSlide}: Explanation`;
-
-                if (isInitialLoad) { explanationDiv.innerHTML = explanationText; }
-                else {
-                    explanationDiv.classList.add('fade-out');
-                    setTimeout(() => {
-                        explanationDiv.innerHTML = explanationText;
-                        explanationDiv.classList.remove('fade-out');
-                        // Scroll the wrapper, not the container
-                        if (explanationContentWrapper) explanationContentWrapper.scrollTop = 0;
-                    }, 300);
+                const explanation = slideExplanations[currentSlide - 1] || "No explanation available for this slide.";
+                explanationDiv.classList.add('fade-out');
+                
+                setTimeout(() => {
+                    explanationDiv.innerHTML = explanation;
+                    explanationDiv.classList.remove('fade-out');
+                    // Scroll the wrapper to top
+                    if (explanationContentWrapper) explanationContentWrapper.scrollTop = 0;
+                }, isInitialLoad ? 0 : 300);
+                
+                // Update URL hash without triggering a new history entry
+                const newUrl = `#slide=${currentSlide}`;
+                if (!isInitialLoad) {
+                    window.history.pushState(null, '', newUrl);
+                } else {
+                    window.history.replaceState(null, '', newUrl);
                 }
-
-                if (!isInitialLoad) history.pushState(null, null, `#slide=${currentSlide}`);
-                else history.replaceState(null, null, `#slide=${currentSlide}`);
-                prevBtn.disabled = currentSlide === 1;
-                nextBtn.disabled = currentSlide === totalSlides;
             }
 
-            function goToSlide(slideNumber, isInitialLoad = false) {
+            function goToSlide(slideNumber, isInitialLoad = false, direction = 'default') {
                  if (isTransitioning || (slideNumber === currentSlide && !isInitialLoad)) return;
                  const targetSlide = Math.max(1, Math.min(slideNumber, totalSlides));
                  if (targetSlide === currentSlide && !isInitialLoad) return;
                  isTransitioning = true;
                  currentSlide = targetSlide;
                  slideIframe.style.opacity = 0;
+                 
+                 // Determine transition direction
+                 if (!direction) {
+                     direction = slideNumber > currentSlide ? 'next' : 'prev';
+                     if (Math.abs(slideNumber - currentSlide) > 1) direction = 'jump';
+                 }
+                 
                  slideIframe.onload = () => {
+                     applySlideTransition(direction);
                      slideIframe.style.opacity = 1;
                      isTransitioning = false;
                      slideIframe.onload = null;
@@ -381,13 +792,24 @@
             function handleKeyDown(e) {
                 if (document.activeElement && ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
                 let slideChanged = false;
-                 if (e.key === 'ArrowLeft' || e.key === 'PageUp') { goToSlide(currentSlide - 1); slideChanged = true; }
-                 else if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { goToSlide(currentSlide + 1); slideChanged = true; }
-                 else if (e.key === 'Home') { goToSlide(1); slideChanged = true; }
-                 else if (e.key === 'End') { goToSlide(totalSlides); slideChanged = true; }
-                 else if (e.key >= '1' && e.key <= '9') { const num = parseInt(e.key); if (num <= totalSlides) { goToSlide(num); slideChanged = true; } }
-                 else if (e.key === 'f' || e.key === 'F') { toggleFullscreen(); slideChanged = true; }
-                if (slideChanged) e.preventDefault();
+                let actionTaken = false;
+                
+                // Navigation shortcuts
+                if (e.key === 'ArrowLeft' || e.key === 'PageUp') { goToSlide(currentSlide - 1); slideChanged = true; actionTaken = true; }
+                else if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { goToSlide(currentSlide + 1); slideChanged = true; actionTaken = true; }
+                else if (e.key === 'Home') { goToSlide(1); slideChanged = true; actionTaken = true; }
+                else if (e.key === 'End') { goToSlide(totalSlides); slideChanged = true; actionTaken = true; }
+                else if (e.key >= '1' && e.key <= '9') { const num = parseInt(e.key); if (num <= totalSlides) { goToSlide(num); slideChanged = true; actionTaken = true; } }
+                
+                // Feature shortcuts
+                else if (e.key === 'f' || e.key === 'F') { toggleFullscreen(); actionTaken = true; }
+                else if (e.key === 'd' || e.key === 'D') { toggleDarkModeBtn.click(); actionTaken = true; }
+                else if (e.key === 's' || e.key === 'S') { openSearch(); actionTaken = true; }
+                else if (e.key === 'p' || e.key === 'P') { printSlideBtn.click(); actionTaken = true; }
+                else if (e.key === 'o' || e.key === 'O') { downloadSlideBtn.click(); actionTaken = true; }
+                
+                // Prevent default browser behavior if we took an action
+                if (actionTaken) e.preventDefault();
             }
 
             function toggleFullscreen() {
