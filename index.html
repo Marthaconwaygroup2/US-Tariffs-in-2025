@@ -2,179 +2,901 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>U.S. Tariffs in 2025: Methodology</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Modern Slideshow - Responsive</title> 
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'], },
+                    colors: {
+                        primaryDark: '#0a0f1a',
+                        secondaryDark: '#111827',
+                        accentBlue: '#38bdf8',
+                        lightText: '#e5e7eb',
+                        mutedText: '#cbd5e1',
+                        panelBorder: 'rgba(255, 255, 255, 0.08)',
+                    }
+                }
+            }
+        }
+    </script>
     <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        html { height: 100%; }
+        :root {
+            --accent-color: #38bdf8;
+            --text-color: #f1f5f9;
+            --muted-text: #cbd5e1;
+            --bg-gradient-start: rgba(15, 23, 42, 0.98);
+            --bg-gradient-end: rgba(23, 31, 56, 1);
+        }
+        
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 0;
+             height: 100%;
+             background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+             background-attachment: fixed;
+             color: var(--text-color, #f1f5f9); display: flex; flex-direction: column; font-family: 'Inter', sans-serif; font-feature-settings: "ss01", "ss02", "cv01", "cv02"; font-variation-settings: "wght" 400; overflow: hidden;
+             opacity: 0; animation: fadeIn 0.4s 0.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+             -webkit-tap-highlight-color: transparent;
         }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        .page-header {
+            flex-shrink: 0; padding: 0.8rem 1.5rem; text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            background: rgba(15, 23, 42, 0.2); backdrop-filter: blur(12px);
+            height: 60px; display: flex; flex-direction: column; justify-content: center;
+            position: sticky; top: 0; z-index: 50;
+        }
+        .page-header h1 { font-size: 1.2rem; font-variation-settings: "wght" 500; letter-spacing: 0.05em; color: var(--text-color, #f1f5f9); margin: 0; text-transform: uppercase; }
+
+        .main-content {
+             flex-grow: 1; display: flex; flex-direction: row;
+             padding: 16px 16px 16px 12px;
+             gap: 16px; overflow: hidden;
+             align-items: center;
+             height: calc(100vh - 60px);
+        }
+
         .slide-container {
-            width: 1280px;
-            min-height: 720px;
-            margin: 0 auto;
-            background-color: white;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            position: relative;
+             width: 78%; position: relative; display: flex; flex-direction: column;
+             align-self: stretch;
+             justify-content: center;
+        }
+
+        .slide-frame {
+             width: 100%; aspect-ratio: 16 / 9;
+             position: relative; overflow: hidden; border-radius: 8px;
+             background-color: rgba(17, 24, 39, 0.4);
+             border: 1px solid rgba(255, 255, 255, 0.04);
+             box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.5);
+             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+             max-width: 100%;
+             margin: auto 0;
+        }
+        .slide-container:hover .slide-frame { transform: translateY(-4px); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6); }
+
+        .slide-iframe {
+            width: 100%; height: 100%; display: block;
+            background-color: rgba(17, 24, 39, 0.4);
+            overflow: hidden; border: none; border-radius: 8px;
+            opacity: 1; transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .explanation-container {
+            width: 22%; padding: 1.25rem 1rem;
+            color: var(--lightText, #f1f5f9);
+            align-self: stretch;
+            display: flex; flex-direction: column;
             overflow: hidden;
+            background: rgba(17, 24, 39, 0.2);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
         }
-        .header-bar {
-            height: 8px;
-            background: linear-gradient(90deg, #0046ad 0%, #0076ce 100%);
+        .explanation-content-wrapper {
+            overflow-y: auto;
+            flex-grow: 1;
+            overscroll-behavior: contain;
+            padding-right: 8px;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
         }
-        .mckinsey-blue {
-            color: #0046ad;
+
+        #slideExplanation {
+             font-size: 0.95rem; line-height: 1.7; padding-top: 0.75rem;
+             opacity: 1; transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+             color: rgba(241, 245, 249, 0.8);
         }
-        .mckinsey-light-blue {
-            color: #0076ce;
+        #slideExplanation.fade-out { opacity: 0; }
+        .explanation-container h3 {
+             font-size: 0.95rem; font-weight: 500; color: #f1f5f9;
+             margin-bottom: 0.75rem; padding-bottom: 0.75rem;
+             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+             flex-shrink: 0;
+             letter-spacing: 0.03em;
         }
-        .data-source {
-            border-left: 3px solid #0076ce;
-            transition: all 0.3s ease;
+
+        .controls-area {
+            flex-shrink: 0; height: 50px; background: transparent;
+            display: flex; align-items: center; justify-content: flex-end;
+            padding: 8px 0.5rem; gap: 1rem; margin-top: 12px;
         }
-        .data-source:hover {
-            transform: translateX(5px);
-            background-color: rgba(0, 118, 206, 0.05);
+        .control-group { display: flex; align-items: center; gap: 1rem; color: var(--text-color, #f1f5f9); font-size: 0.9rem; font-variation-settings: "wght" 400; }
+         .control-group button { background: none; border: none; color: rgba(241, 245, 249, 0.7); padding: 6px; cursor: pointer; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); line-height: 1; font-size: 1.05em; position: relative; }
+         .control-group button .shortcut-hint { position: absolute; bottom: -18px; left: 50%; transform: translateX(-50%); font-size: 0.65rem; background: rgba(0, 0, 0, 0.6); padding: 2px 5px; border-radius: 3px; opacity: 0; transition: opacity 0.2s ease; white-space: nowrap; pointer-events: none; }
+         .control-group button:hover .shortcut-hint { opacity: 1; }
+         .control-group button:hover { color: var(--accent-color, #38bdf8); transform: translateY(-1px); }
+         .control-group span { font-family: monospace; font-size: 0.9em; color: rgba(241, 245, 249, 0.7); letter-spacing: 0.05em; }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle { cursor: pointer; display: flex; align-items: center; }
+        .dark-mode-toggle i { transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+        body.dark-mode { 
+            --bg-gradient-start: rgba(10, 15, 26, 0.98);
+            --bg-gradient-end: rgba(17, 24, 39, 1);
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%); 
         }
-        .methodology-box {
-            border: 1px solid #e9ecef;
-            border-radius: 6px;
-            transition: all 0.3s ease;
+        
+        /* Custom Scrollbar Styling */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); border-radius: 8px; }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.08); border-radius: 8px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(var(--accent-color-rgb, 56, 189, 248), 0.2); }
+        
+        /* Subtle animations */
+        .control-group button i { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .control-group button:hover i { transform: translateY(-1px); }
+        /* Enhanced slide transitions */
+        .slide-iframe { animation: fadeScale 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes fadeScale { from { opacity: 0.8; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+        
+        /* Additional slide transition animations */
+        .slide-iframe.transition-fade { animation: transitionFade 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        .slide-iframe.transition-slide-left { animation: transitionSlideLeft 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        .slide-iframe.transition-slide-right { animation: transitionSlideRight 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        .slide-iframe.transition-zoom { animation: transitionZoom 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        
+        @keyframes transitionFade { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes transitionSlideLeft { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes transitionSlideRight { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes transitionZoom { from { opacity: 0; transform: scale(1.1); } to { opacity: 1; transform: scale(1); } }
+        
+        /* Search Modal */
+        .search-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 100; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+        .search-container { background: rgba(17, 24, 39, 0.8); border: 1px solid rgba(255, 255, 255, 0.04); border-radius: 12px; padding: 1.75rem; width: 90%; max-width: 500px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+        .search-container h3 { margin-top: 0; color: #f1f5f9; font-weight: 500; letter-spacing: 0.03em; font-size: 1.1rem; }
+        .search-input { width: 100%; padding: 0.85rem; background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(255, 255, 255, 0.04); border-radius: 8px; color: #f1f5f9; margin-bottom: 1.25rem; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .search-input:focus { outline: none; border-color: rgba(56, 189, 248, 0.5); box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2); }
+        .search-results { max-height: 300px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.1) transparent; }
+        .search-result-item { padding: 0.75rem; cursor: pointer; border-radius: 8px; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); margin-bottom: 4px; }
+        .search-result-item:hover { background: rgba(56, 189, 248, 0.15); transform: translateY(-1px); }
+        .search-close { position: absolute; top: 1.25rem; right: 1.25rem; background: none; border: none; color: rgba(241, 245, 249, 0.8); font-size: 1.25rem; cursor: pointer; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .search-close:hover { color: #f1f5f9; transform: scale(1.1); }
+        
+        /* Share Modal */
+        .share-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 100; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+        .share-container { background: rgba(17, 24, 39, 0.8); border: 1px solid rgba(255, 255, 255, 0.04); border-radius: 12px; padding: 1.75rem; width: 90%; max-width: 400px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+        .share-container h3 { margin-top: 0; color: #f1f5f9; font-weight: 500; letter-spacing: 0.03em; font-size: 1.1rem; }
+        .share-buttons { display: flex; justify-content: space-around; margin: 1.25rem 0; }
+        .share-button { background: none; border: none; color: rgba(241, 245, 249, 0.8); font-size: 1.4rem; cursor: pointer; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); padding: 8px; }
+        .share-button:hover { color: #38bdf8; transform: translateY(-2px); }
+        .share-link { width: 100%; padding: 0.85rem; background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(255, 255, 255, 0.04); border-radius: 8px; color: #f1f5f9; margin-bottom: 0.5rem; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .share-link:focus { outline: none; border-color: rgba(56, 189, 248, 0.5); box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2); }
+        .share-close { position: absolute; top: 1.25rem; right: 1.25rem; background: none; border: none; color: rgba(241, 245, 249, 0.8); font-size: 1.25rem; cursor: pointer; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .share-close:hover { color: #f1f5f9; transform: scale(1.1); }
+
+        /* Progress indicators removed */
+
+
+        .nav-controls {
+             position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+             display: flex; justify-content: space-between; align-items: center; padding: 0 1.25rem; opacity: 0; transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1); z-index: 20; pointer-events: none;
         }
-        .methodology-box:hover {
-            border-color: #0046ad;
-            box-shadow: 0 4px 12px rgba(0, 70, 173, 0.1);
+        /* Make nav arrows visible on touch devices without hover */
+        @media (hover: none) {
+            .nav-controls { opacity: 0.7; }
         }
-        .footer {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 40px;
-            background-color: #f8f9fa;
-            border-top: 1px solid #e9ecef;
+        .slide-frame:hover .nav-controls { opacity: 1; }
+
+        .nav-button { background: rgba(17, 24, 39, 0.6); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.04); color: rgba(241, 245, 249, 0.8); width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: auto; }
+        .nav-button:hover { background: rgba(30, 41, 59, 0.8); color: #f1f5f9; transform: scale(1.05); box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.5); }
+        .nav-button:disabled { opacity: 0.3; cursor: not-allowed; transform: scale(1); pointer-events: none; }
+
+        /* Removed Modal Styles */
+        /* Print Styles (Remain basic) */
+        @media print { /* ... print styles ... */ }
+
+        /* --- Responsive Styles --- */
+        @media (max-width: 768px) {
+            body {
+                overflow: auto;
+                height: auto;
+            }
+            .page-header {
+                height: 55px;
+                position: sticky;
+                padding: 0.7rem 1rem;
+                z-index: 10;
+            }
+            .page-header h1 { font-size: 1rem; letter-spacing: 0.06em; }
+
+            .main-content {
+                flex-direction: column;
+                height: auto;
+                padding: 12px;
+                gap: 16px;
+                overflow: visible;
+            }
+
+            .slide-container {
+                width: 100%;
+                order: 1;
+                align-self: auto;
+                justify-content: flex-start;
+                height: auto;
+                margin-bottom: 16px;
+            }
+
+            .slide-frame {
+                /* Adjust aspect ratio to ensure full visibility on mobile */
+                aspect-ratio: 16 / 9;
+                width: 100%;
+                margin: 0;
+                box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.4);
+                position: relative;
+                overflow: hidden;
+            }
+            .slide-container:hover .slide-frame {
+                transform: none;
+                box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.4);
+            }
+
+            .slide-iframe {
+                width: 100%;
+                height: 100%;
+                /* Scale content to fit mobile viewport */
+                transform-origin: top left;
+                overflow: hidden;
+                border: none;
+            }
+            
+            /* Make navigation controls more visible on mobile */
+            .nav-controls {
+                opacity: 0.8;
+                pointer-events: auto;
+            }
+            
+            .controls-area {
+                justify-content: space-between;
+                gap: 0.75rem;
+                height: auto;
+                padding: 8px 4px;
+                flex-wrap: wrap;
+                margin-top: 8px;
+            }
+            .progress-bar-container {
+                width: 100px;
+                margin-right: 0;
+                order: 2; /* Place it potentially after other controls if wrapped */
+                height: 2px;
+            }
+            .control-group {
+                order: 1; /* Ensure essential controls come first */
+                margin-left: auto; /* Push controls right */
+                gap: 0.75rem;
+            }
+            .control-group button { font-size: 0.95em; padding: 5px; }
+            
+            .explanation-container {
+                width: 100%;
+                order: 2; /* Explicitly place explanation below slide */
+                height: auto;
+                max-height: none; /* Allow content to determine height */
+                align-self: auto;
+                padding: 1rem;
+                overflow: hidden;
+                margin-bottom: 12px;
+            }
+            .explanation-content-wrapper {
+                padding-right: 0;
+                max-height: 50vh; /* Limit height but allow scrolling */
+                overflow-y: auto;
+            }
+
+            .explanation-container h3 { font-size: 0.9rem; margin-bottom: 0.6rem; padding-bottom: 0.6rem; }
+            #slideExplanation { font-size: 0.85rem; line-height: 1.6; padding-top: 0.5rem; }
+
+            .nav-controls { padding: 0 0.5rem; }
+            .nav-button { width: 40px; height: 40px; }
         }
+
+         @media (max-width: 480px) {
+             /* Further adjustments for very small screens */
+             .page-header h1 { font-size: 0.95rem; }
+             .progress-bar-container { width: 100px; }
+             .control-group span { font-size: 0.8em; }
+             .control-group button { font-size: 0.95em; padding: 4px; }
+             .control-group button .shortcut-hint { bottom: -16px; font-size: 0.6rem; }
+             
+             /* Ensure slide is fully visible */
+             .slide-frame {
+                 aspect-ratio: 16 / 9;
+                 width: 100%;
+             }
+             
+             /* Optimize controls for small screens */
+             .controls-area {
+                 padding: 6px 2px;
+                 gap: 0.5rem;
+             }
+             
+             /* Improve explanation section for small screens */
+             .explanation-container { padding: 0.75rem; }
+             .explanation-container h3 { font-size: 0.85rem; margin-bottom: 0.5rem; padding-bottom: 0.5rem; }
+             #slideExplanation { font-size: 0.8rem; line-height: 1.5; padding-top: 0.4rem; }
+             
+             /* Adjust navigation buttons */
+             .nav-button { width: 36px; height: 36px; }
+         }
+
     </style>
 </head>
 <body>
-    <div class="slide-container flex flex-col">
-        <div class="header-bar"></div>
-        
-        <!-- Logo and Slide Title -->
-        <div class="flex justify-between items-center px-16 pt-10 pb-4">
-            <h1 class="text-3xl font-bold mckinsey-blue">Methodology</h1>
-        </div>
-        <h2 class="px-16 text-xl font-semibold mckinsey-light-blue mb-6">Research Design & Analytical Framework</h2>
-        
-        <!-- Methodology Content -->
-        <div class="flex flex-col px-16 py-4 flex-grow">
-            <div class="grid grid-cols-2 gap-8">
-                <!-- Left Column - Data Sources -->
-                <div>
-                    <h3 class="text-lg font-semibold mb-4 mckinsey-blue">Data Sources</h3>
-                    <div class="space-y-4">
-                        <div class="data-source pl-4 py-2">
-                            <p class="font-semibold">U.S. Census Bureau</p>
-                            <p class="text-sm text-gray-600">Trade flows, import-export volumes, tariff revenue</p>
-                        </div>
-                        
-                        <div class="data-source pl-4 py-2">
-                            <p class="font-semibold">OECD</p>
-                            <p class="text-sm text-gray-600">GDP forecasts, economic impact projections</p>
-                        </div>
-                        
-                        <div class="data-source pl-4 py-2">
-                            <p class="font-semibold">Bloomberg ESG</p>
-                            <p class="text-sm text-gray-600">Supply chain risks, manufacturing impact analysis</p>
-                        </div>
-                        
-                        <div class="data-source pl-4 py-2">
-                            <p class="font-semibold">Country-Specific Datasets</p>
-                            <p class="text-sm text-gray-600">China's Ministry of Commerce retaliation analysis</p>
-                            <p class="text-sm text-gray-600">EU Trade Dashboard for German exports</p>
-                            <p class="text-sm text-gray-600">Bank of Japan economic impact assessment</p>
-                        </div>
-                    </div>
+
+    <header class="page-header">
+        <h1>US TARIFFS</h1>
+    </header>
+
+    <div class="main-content">
+
+        <div class="slide-container" id="slideContainer">
+             <div class="slide-frame">
+                 <iframe id="currentSlide" class="slide-iframe" src="1.html" title="Current Slide"></iframe>
+                 <div class="nav-controls">
+                    <button id="prevSlide" class="nav-button" title="Previous Slide (Left Arrow)"> <i class="fas fa-chevron-left"></i> </button>
+                    <button id="nextSlide" class="nav-button" title="Next Slide (Right Arrow)"> <i class="fas fa-chevron-right"></i> </button>
+                 </div>
+            </div>
+
+             <div class="controls-area">
+                <div class="control-group">
+                    <span id="slideInfo">1 / 16</span>
+                    <button id="toggleFullscreen" title="Toggle Fullscreen (F)"> <i class="fas fa-expand"></i> <span class="shortcut-hint">F</span> </button>
+                    <button id="toggleDarkMode" title="Toggle Dark Mode (D)"> <i class="fas fa-moon"></i> <span class="shortcut-hint">D</span> </button>
+                    <button id="openSearch" title="Search Slides (S)"> <i class="fas fa-search"></i> <span class="shortcut-hint">S</span> </button>
+                    <button id="printSlide" title="Print Current Slide (P)"> <i class="fas fa-print"></i> <span class="shortcut-hint">P</span> </button>
+                    <button id="downloadSlide" title="Download Slide (O)"> <i class="fas fa-download"></i> <span class="shortcut-hint">O</span> </button>
+                    <button id="shareSlide" title="Share Slide"> <i class="fas fa-share-alt"></i> </button>
                 </div>
+             </div>
+        </div>
+
+        <div class="explanation-container">
+             <h3 id="explanationTitle">Slide 1: Explanation</h3>
+             <div class="explanation-content-wrapper">
+                <div id="slideExplanation"> Loading explanation... </div>
+             </div>
+             
+             <!-- Slide dots indicator -->
+             <div class="slide-dots-container" id="slideDots"></div>
+        </div>
+
+    </div>
+
+    <!-- Add script to handle iframe scaling -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Function to scale iframe content for mobile devices
+            function scaleIframeContent() {
+                const iframe = document.getElementById('currentSlide');
+                const iframeContainer = document.querySelector('.slide-frame');
                 
-                <!-- Right Column - Analytical Framework -->
-                <div>
-                    <h3 class="text-lg font-semibold mb-4 mckinsey-blue">Analytical Framework</h3>
+                if (window.innerWidth <= 768) {
+                    // For mobile devices
+                    // Get the container width
+                    const containerWidth = iframeContainer.offsetWidth;
                     
-                    <div class="methodology-box p-4 mb-4">
-                        <div class="flex items-center">
-                            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center mr-3">
-                                <i class="fas fa-chart-line text-blue-600"></i>
-                            </div>
-                            <div>
-                                <p class="font-semibold">Econometric Modeling</p>
-                                <p class="text-sm text-gray-600">Regression analysis of tariff impacts across time series</p>
-                            </div>
-                        </div>
-                    </div>
+                    // Set scale factor based on the ratio of container width to slide width (1280px)
+                    const scaleFactor = containerWidth / 1280;
                     
-                    <div class="methodology-box p-4 mb-4">
-                        <div class="flex items-center">
-                            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center mr-3">
-                                <i class="fas fa-project-diagram text-blue-600"></i>
-                            </div>
-                            <div>
-                                <p class="font-semibold">Supply Chain Network Analysis</p>
-                                <p class="text-sm text-gray-600">Disruption modeling and flow pattern shifts</p>
-                            </div>
-                        </div>
-                    </div>
+                    // Apply the scale transform to the iframe
+                    iframe.style.transform = `scale(${scaleFactor})`;
+                    iframe.style.transformOrigin = 'top left';
+                    iframe.style.width = `${1280}px`;
+                    iframe.style.height = `${720}px`;
                     
-                    <div class="methodology-box p-4">
-                        <div class="flex items-center">
-                            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center mr-3">
-                                <i class="fas fa-code text-blue-600"></i>
-                            </div>
-                            <div>
-                                <p class="font-semibold">Technical Tools</p>
-                                <p class="text-sm text-gray-600">Python (Pandas/Matplotlib), Tableau, R</p>
-                                <p class="text-sm text-gray-600">No synthetic data—only peer-reviewed datasets</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                    // Adjust container height to match scaled content
+                    iframeContainer.style.height = `${720 * scaleFactor}px`;
+                } else {
+                    // Reset for desktop
+                    iframe.style.transform = '';
+                    iframe.style.width = '100%';
+                    iframe.style.height = '100%';
+                    iframeContainer.style.height = '';
+                }
+            }
             
-            <!-- Research Quality Assurance -->
-            <div class="mt-10 pt-6">
-                <div class="bg-gray-50 p-4 rounded-lg">
-                    <h4 class="font-semibold mckinsey-blue mb-2">Research Quality Assurance</h4>
-                    <div class="grid grid-cols-3 gap-4">
-                        <div class="flex items-center">
-                            <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center mr-2">
-                                <i class="fas fa-check text-green-600 text-sm"></i>
-                            </div>
-                            <span class="text-sm">Peer-reviewed sources</span>
-                        </div>
-                        <div class="flex items-center">
-                            <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center mr-2">
-                                <i class="fas fa-check text-green-600 text-sm"></i>
-                            </div>
-                            <span class="text-sm">Cross-validation of models</span>
-                        </div>
-                        <div class="flex items-center">
-                            <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center mr-2">
-                                <i class="fas fa-check text-green-600 text-sm"></i>
-                            </div>
-                            <span class="text-sm">Expert panel review</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Footer -->
-        <div class="footer flex justify-between items-center px-16">
+            // Initial scaling
+            scaleIframeContent();
+            
+            // Re-scale on window resize
+            window.addEventListener('resize', scaleIframeContent);
+            
+            // Re-scale when slide changes
+            document.getElementById('prevSlide').addEventListener('click', function() {
+                setTimeout(scaleIframeContent, 100);
+            });
+            document.getElementById('nextSlide').addEventListener('click', function() {
+                setTimeout(scaleIframeContent, 100);
+            });
+        });
+    </script>
+    
+    <!-- Search Modal -->
+    <div id="searchModal" class="search-modal">
+        <div class="search-container">
+            <h3>Search Slides</h3>
+            <input type="text" id="searchInput" class="search-input" placeholder="Enter search term...">
+            <div id="searchResults" class="search-results"></div>
+            <button class="search-close" id="closeSearch"><i class="fas fa-times"></i></button>
         </div>
     </div>
+
+    <!-- Share Modal -->
+    <div id="shareModal" class="share-modal">
+        <div class="share-container">
+            <h3>Share This Slide</h3>
+            <div class="share-buttons">
+                <button class="share-button" id="shareTwitter"><i class="fab fa-twitter"></i></button>
+                <button class="share-button" id="shareFacebook"><i class="fab fa-facebook"></i></button>
+                <button class="share-button" id="shareLinkedIn"><i class="fab fa-linkedin"></i></button>
+                <button class="share-button" id="shareEmail"><i class="fas fa-envelope"></i></button>
+            </div>
+            <input type="text" id="shareLink" class="share-link" readonly>
+            <button class="share-close" id="closeShare"><i class="fas fa-times"></i></button>
+        </div>
+    </div>
+
+    <script>
+         document.addEventListener('DOMContentLoaded', async function() {
+
+            // --- Configuration Variables ---
+            let totalSlides = 0;
+            let slideExplanations = [];
+
+            // --- DOM Elements ---
+            const slideContainer = document.getElementById('slideContainer');
+            const slideIframe = document.getElementById('currentSlide');
+            const slideInfo = document.getElementById('slideInfo');
+            const prevBtn = document.getElementById('prevSlide');
+            const nextBtn = document.getElementById('nextSlide');
+            const progressBar = document.getElementById('progressBar');
+            const toggleFullscreenBtn = document.getElementById('toggleFullscreen');
+            // Select the scrollable wrapper instead of the main container
+            const explanationContentWrapper = document.querySelector('.explanation-content-wrapper');
+            const explanationTitle = document.getElementById('explanationTitle');
+            const explanationDiv = document.getElementById('slideExplanation');
+            
+            // New feature elements
+            const toggleDarkModeBtn = document.getElementById('toggleDarkMode');
+            const openSearchBtn = document.getElementById('openSearch');
+            const printSlideBtn = document.getElementById('printSlide');
+            const downloadSlideBtn = document.getElementById('downloadSlide');
+            const shareSlideBtn = document.getElementById('shareSlide');
+            
+            // Modal elements
+            const searchModal = document.getElementById('searchModal');
+            const searchInput = document.getElementById('searchInput');
+            const searchResults = document.getElementById('searchResults');
+            const closeSearchBtn = document.getElementById('closeSearch');
+            
+            const shareModal = document.getElementById('shareModal');
+            const shareLink = document.getElementById('shareLink');
+            const closeShareBtn = document.getElementById('closeShare');
+            const shareTwitterBtn = document.getElementById('shareTwitter');
+            const shareFacebookBtn = document.getElementById('shareFacebook');
+            const shareLinkedInBtn = document.getElementById('shareLinkedIn');
+            const shareEmailBtn = document.getElementById('shareEmail');
+
+            // --- State Variables ---
+            let currentSlide = 1;
+            let isTransitioning = false;
+
+            // --- Load Configuration ---
+            async function loadConfig() {
+                try {
+                    const response = await fetch('slides.json');
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    const config = await response.json();
+                    if (typeof config.totalSlides !== 'number' || config.totalSlides <= 0) throw new Error('Invalid totalSlides');
+                    if (!Array.isArray(config.slideExplanations) || config.slideExplanations.length !== config.totalSlides) throw new Error('Explanations length mismatch');
+                    totalSlides = config.totalSlides;
+                    slideExplanations = config.slideExplanations;
+                    console.log(`Configuration loaded: ${totalSlides} slides.`);
+                    return true;
+                } catch (error) {
+                    console.error('Error loading slides.json:', error);
+                    explanationDiv.innerHTML = `<p style="color: #f87171;">Error loading configuration (slides.json).</p>`;
+                    explanationTitle.textContent = 'Error';
+                    prevBtn.disabled = true;
+                    nextBtn.disabled = true;
+                    return false;
+                }
+            }
+
+            // --- Core Application Logic ---
+            function initializeApp() {
+                initializeSlide();
+                prevBtn.addEventListener('click', () => goToSlide(currentSlide - 1, false, 'prev'));
+                nextBtn.addEventListener('click', () => goToSlide(currentSlide + 1, false, 'next'));
+                window.addEventListener('popstate', () => { initializeSlide(); });
+                toggleFullscreenBtn.addEventListener('click', toggleFullscreen);
+                document.addEventListener('fullscreenchange', handleFullscreenChange);
+                document.addEventListener('keydown', handleKeyDown);
+                
+                // Initialize new features
+                initDarkMode();
+                initSearch();
+                initPrint();
+                initDownload();
+                initShare();
+            }
+            
+            // --- New Feature Functions ---
+            
+            // Theme color customization and slide dots functions removed
+            
+            // Slide dots function removed
+            
+            // Enhanced slide transitions
+            function applySlideTransition(direction) {
+                slideIframe.className = 'slide-iframe';
+                
+                // Apply different transition based on direction
+                if (direction === 'next') {
+                    slideIframe.classList.add('transition-slide-left');
+                } else if (direction === 'prev') {
+                    slideIframe.classList.add('transition-slide-right');
+                } else if (direction === 'jump') {
+                    slideIframe.classList.add('transition-zoom');
+                } else {
+                    slideIframe.classList.add('transition-fade');
+                }
+            }
+            
+            // Dark Mode
+            function initDarkMode() {
+                // Check for saved preference
+                const darkModePref = localStorage.getItem('darkMode');
+                if (darkModePref === 'enabled') {
+                    document.body.classList.add('dark-mode');
+                    toggleDarkModeBtn.querySelector('i').classList.replace('fa-moon', 'fa-sun');
+                }
+                
+                toggleDarkModeBtn.addEventListener('click', () => {
+                    document.body.classList.toggle('dark-mode');
+                    const icon = toggleDarkModeBtn.querySelector('i');
+                    
+                    if (document.body.classList.contains('dark-mode')) {
+                        icon.classList.replace('fa-moon', 'fa-sun');
+                        localStorage.setItem('darkMode', 'enabled');
+                    } else {
+                        icon.classList.replace('fa-sun', 'fa-moon');
+                        localStorage.setItem('darkMode', 'disabled');
+                    }
+                });
+            }
+            
+            // Search
+            function initSearch() {
+                openSearchBtn.addEventListener('click', openSearch);
+                closeSearchBtn.addEventListener('click', closeSearch);
+                searchInput.addEventListener('input', performSearch);
+                
+                // Close modal when clicking outside
+                searchModal.addEventListener('click', (e) => {
+                    if (e.target === searchModal) closeSearch();
+                });
+            }
+            
+            function openSearch() {
+                searchModal.style.display = 'flex';
+                searchInput.focus();
+                performSearch(); // Initial search with empty input
+            }
+            
+            function closeSearch() {
+                searchModal.style.display = 'none';
+                searchInput.value = '';
+            }
+            
+            function performSearch() {
+                const searchTerm = searchInput.value.toLowerCase();
+                searchResults.innerHTML = '';
+                
+                // Search through slide explanations
+                slideExplanations.forEach((explanation, index) => {
+                    if (explanation.toLowerCase().includes(searchTerm) || searchTerm === '') {
+                        const resultItem = document.createElement('div');
+                        resultItem.className = 'search-result-item';
+                        resultItem.innerHTML = `<strong>Slide ${index + 1}</strong>: ${highlightSearchTerm(explanation, searchTerm)}`;
+                        resultItem.addEventListener('click', () => {
+                            goToSlide(index + 1);
+                            closeSearch();
+                        });
+                        searchResults.appendChild(resultItem);
+                    }
+                });
+                
+                if (searchResults.children.length === 0) {
+                    searchResults.innerHTML = '<div class="p-2">No results found</div>';
+                }
+            }
+            
+            function highlightSearchTerm(text, term) {
+                if (term === '') return text.substring(0, 100) + '...';
+                
+                const maxLength = 100;
+                const lowerText = text.toLowerCase();
+                const index = lowerText.indexOf(term);
+                
+                if (index === -1) return text.substring(0, maxLength) + '...';
+                
+                const start = Math.max(0, index - 40);
+                const end = Math.min(text.length, index + term.length + 40);
+                let excerpt = text.substring(start, end);
+                
+                if (start > 0) excerpt = '...' + excerpt;
+                if (end < text.length) excerpt = excerpt + '...';
+                
+                // Highlight the term
+                const regex = new RegExp(term, 'gi');
+                return excerpt.replace(regex, match => `<span style="background-color: rgba(56, 189, 248, 0.3); padding: 0 2px;">${match}</span>`);
+            }
+            
+            // Print
+            function initPrint() {
+                printSlideBtn.addEventListener('click', printCurrentSlide);
+            }
+            
+            function printCurrentSlide() {
+                const iframe = document.getElementById('currentSlide');
+                const iframeContent = iframe.contentWindow;
+                
+                // Add current explanation to the print
+                const explanationText = slideExplanations[currentSlide - 1] || "No explanation.";
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = explanationText;
+                tempDiv.style.padding = '20px';
+                tempDiv.style.fontFamily = 'Inter, sans-serif';
+                tempDiv.style.maxWidth = '800px';
+                tempDiv.style.margin = '20px auto';
+                
+                // Temporarily append to iframe document
+                iframeContent.document.body.appendChild(tempDiv);
+                
+                // Print
+                iframeContent.focus();
+                iframeContent.print();
+                
+                // Remove after printing
+                setTimeout(() => {
+                    iframeContent.document.body.removeChild(tempDiv);
+                }, 1000);
+            }
+            
+            // Download
+            function initDownload() {
+                downloadSlideBtn.addEventListener('click', downloadSlide);
+            }
+            
+            function downloadSlide() {
+                const iframe = document.getElementById('currentSlide');
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                
+                // Get the HTML content
+                let htmlContent = iframeDoc.documentElement.outerHTML;
+                
+                // Add explanation as a comment
+                const explanationText = slideExplanations[currentSlide - 1] || "No explanation.";
+                htmlContent += `\n<!-- Slide Explanation: \n${explanationText}\n-->`;
+                
+                // Create blob and download
+                const blob = new Blob([htmlContent], { type: 'text/html' });
+                const url = URL.createObjectURL(blob);
+                
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `slide-${currentSlide}.html`;
+                document.body.appendChild(a);
+                a.click();
+                
+                // Cleanup
+                setTimeout(() => {
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }, 100);
+            }
+            
+            // Share
+            function initShare() {
+                shareSlideBtn.addEventListener('click', openShareModal);
+                closeShareBtn.addEventListener('click', closeShareModal);
+                
+                // Social sharing buttons
+                shareTwitterBtn.addEventListener('click', () => shareOnPlatform('twitter'));
+                shareFacebookBtn.addEventListener('click', () => shareOnPlatform('facebook'));
+                shareLinkedInBtn.addEventListener('click', () => shareOnPlatform('linkedin'));
+                shareEmailBtn.addEventListener('click', () => shareOnPlatform('email'));
+                
+                // Copy link functionality
+                shareLink.addEventListener('click', () => {
+                    shareLink.select();
+                    document.execCommand('copy');
+                    alert('Link copied to clipboard!');
+                });
+                
+                // Close modal when clicking outside
+                shareModal.addEventListener('click', (e) => {
+                    if (e.target === shareModal) closeShareModal();
+                });
+            }
+            
+            function openShareModal() {
+                const currentUrl = window.location.href;
+                shareLink.value = currentUrl;
+                shareModal.style.display = 'flex';
+            }
+            
+            function closeShareModal() {
+                shareModal.style.display = 'none';
+            }
+            
+            function shareOnPlatform(platform) {
+                const currentUrl = encodeURIComponent(window.location.href);
+                const title = encodeURIComponent(document.title);
+                const text = encodeURIComponent(`Check out this slide: ${document.title}`);
+                
+                let shareUrl;
+                
+                switch(platform) {
+                    case 'twitter':
+                        shareUrl = `https://twitter.com/intent/tweet?url=${currentUrl}&text=${text}`;
+                        break;
+                    case 'facebook':
+                        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`;
+                        break;
+                    case 'linkedin':
+                        shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${currentUrl}`;
+                        break;
+                    case 'email':
+                        shareUrl = `mailto:?subject=${title}&body=${text}%20${currentUrl}`;
+                        break;
+                }
+                
+                window.open(shareUrl, '_blank');
+            }
+
+            // --- Functions ---
+             function initializeSlide() {
+                 const hash = window.location.hash;
+                 const hashMatch = hash.match(/^#slide=(\d+)$/);
+                 let startSlide = 1;
+                 if (hashMatch) {
+                     const slideNum = parseInt(hashMatch[1], 10);
+                     if (slideNum >= 1 && slideNum <= totalSlides) startSlide = slideNum;
+                 }
+                 currentSlide = startSlide;
+                 slideIframe.src = `${currentSlide}.html`;
+                 updateUI(true);
+                 slideIframe.style.opacity = 1;
+             }
+
+            function updateUI(isInitialLoad = false) {
+                slideInfo.textContent = `${currentSlide} / ${totalSlides}`;
+                prevBtn.disabled = currentSlide <= 1;
+                nextBtn.disabled = currentSlide >= totalSlides;
+                
+                // Update explanation
+                explanationTitle.textContent = `Slide ${currentSlide}: Explanation`;
+                const explanation = slideExplanations[currentSlide - 1] || "No explanation available for this slide.";
+                explanationDiv.classList.add('fade-out');
+                
+                setTimeout(() => {
+                    explanationDiv.innerHTML = explanation;
+                    explanationDiv.classList.remove('fade-out');
+                    // Scroll the wrapper to top
+                    if (explanationContentWrapper) explanationContentWrapper.scrollTop = 0;
+                }, isInitialLoad ? 0 : 300);
+                
+                // Update URL hash without triggering a new history entry
+                const newUrl = `#slide=${currentSlide}`;
+                if (!isInitialLoad) {
+                    window.history.pushState(null, '', newUrl);
+                } else {
+                    window.history.replaceState(null, '', newUrl);
+                }
+            }
+
+            function goToSlide(slideNumber, isInitialLoad = false, direction = 'default') {
+                 if (isTransitioning || (slideNumber === currentSlide && !isInitialLoad)) return;
+                 const targetSlide = Math.max(1, Math.min(slideNumber, totalSlides));
+                 if (targetSlide === currentSlide && !isInitialLoad) return;
+                 isTransitioning = true;
+                 currentSlide = targetSlide;
+                 slideIframe.style.opacity = 0;
+                 
+                 // Determine transition direction
+                 if (!direction) {
+                     direction = slideNumber > currentSlide ? 'next' : 'prev';
+                     if (Math.abs(slideNumber - currentSlide) > 1) direction = 'jump';
+                 }
+                 
+                 slideIframe.onload = () => {
+                     applySlideTransition(direction);
+                     slideIframe.style.opacity = 1;
+                     isTransitioning = false;
+                     slideIframe.onload = null;
+                 };
+                 setTimeout(() => { slideIframe.src = `${currentSlide}.html`; }, 50);
+                 updateUI(false);
+            }
+
+            function handleKeyDown(e) {
+                if (document.activeElement && ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
+                let slideChanged = false;
+                let actionTaken = false;
+                
+                // Navigation shortcuts
+                if (e.key === 'ArrowLeft' || e.key === 'PageUp') { goToSlide(currentSlide - 1); slideChanged = true; actionTaken = true; }
+                else if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { goToSlide(currentSlide + 1); slideChanged = true; actionTaken = true; }
+                else if (e.key === 'Home') { goToSlide(1); slideChanged = true; actionTaken = true; }
+                else if (e.key === 'End') { goToSlide(totalSlides); slideChanged = true; actionTaken = true; }
+                else if (e.key >= '1' && e.key <= '9') { const num = parseInt(e.key); if (num <= totalSlides) { goToSlide(num); slideChanged = true; actionTaken = true; } }
+                
+                // Feature shortcuts
+                else if (e.key === 'f' || e.key === 'F') { toggleFullscreen(); actionTaken = true; }
+                else if (e.key === 'd' || e.key === 'D') { toggleDarkModeBtn.click(); actionTaken = true; }
+                else if (e.key === 's' || e.key === 'S') { openSearch(); actionTaken = true; }
+                else if (e.key === 'p' || e.key === 'P') { printSlideBtn.click(); actionTaken = true; }
+                else if (e.key === 'o' || e.key === 'O') { downloadSlideBtn.click(); actionTaken = true; }
+                
+                // Prevent default browser behavior if we took an action
+                if (actionTaken) e.preventDefault();
+            }
+
+            function toggleFullscreen() {
+                 // Attempt to fullscreen the slide container div for better control
+                 const elemToFullscreen = slideContainer || document.documentElement;
+                 if (!document.fullscreenElement) {
+                     elemToFullscreen.requestFullscreen().catch(err => console.error(`FS error: ${err.message}`));
+                 } else {
+                     if (document.exitFullscreen) document.exitFullscreen();
+                 }
+             }
+
+            function handleFullscreenChange() {
+                 const icon = toggleFullscreenBtn.querySelector('i');
+                 if (!document.fullscreenElement) {
+                     if(icon) icon.classList.replace('fa-compress', 'fa-expand');
+                 } else {
+                     if(icon) icon.classList.replace('fa-expand', 'fa-compress');
+                 }
+             }
+
+            // --- Main Execution ---
+            const configLoaded = await loadConfig();
+            if (configLoaded) {
+                initializeApp();
+            }
+        });
+    </script>
+
 </body>
 </html>
